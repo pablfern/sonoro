@@ -11,7 +11,9 @@ public class SpaceShip : MonoBehaviour {
 	private Camera cam;
 
     private Rigidbody2D rb;
-	// Use this for initialization
+	public Rigidbody2D bolt;
+	public float boltSpeed = 10f;
+
 	void Start () {
         //fireSprite.enabled = false;
         rb = GetComponent<Rigidbody2D>();
@@ -20,7 +22,6 @@ public class SpaceShip : MonoBehaviour {
 		cam = GetComponent<Camera>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
         checkInput();
 		checkBoundaries();
@@ -46,7 +47,11 @@ public class SpaceShip : MonoBehaviour {
         }
 		if (Input.GetKeyDown(KeyCode.Space)) {
 			Debug.Log ("SHOOT!");
-			// shoot!
+			float angle = transform.rotation.eulerAngles.z + 90;
+			float x = Mathf.Cos(angle * Mathf.Deg2Rad);
+			float y = Mathf.Sin(angle * Mathf.Deg2Rad);
+			Rigidbody2D boltInstance = Instantiate(bolt, transform.position, Quaternion.Euler(new Vector3(0, 0, 0))) as Rigidbody2D;
+			boltInstance.AddForce(new Vector2(x * boltSpeed, y * boltSpeed));
 		}
     }
 

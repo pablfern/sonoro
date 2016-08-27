@@ -222,6 +222,7 @@ MonoBehaviour:
   asteroidPrefab: {fileID: 1000011012106104, guid: d71654c3afa7f8241b7d46ef146f1ccf,
     type: 2}
   asteroidPoolSize: 20
+  period: 0
 --- !u!4 &1026908434
 Transform:
   m_ObjectHideFlags: 0
@@ -314,6 +315,8 @@ MonoBehaviour:
   rotationSpeed: 1
   width: 16
   height: 16
+  bolt: {fileID: 50000012196124938, guid: b6fde9b1f37dd484e87d650a07584f45, type: 2}
+  boltSpeed: 100
 --- !u!58 &1070694723
 CircleCollider2D:
   m_ObjectHideFlags: 0
