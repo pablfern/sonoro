@@ -8,6 +8,7 @@ public class SpaceShip : MonoBehaviour {
     public float rotationSpeed = 2.0f;
 	public float width;
 	public float height;
+    public GameObject gameController;
 	private Camera cam;
 
     private Rigidbody2D rb;
@@ -57,8 +58,9 @@ public class SpaceShip : MonoBehaviour {
     }
 
 
-    void restartPosition() {
-        // TODO: Reset objects forces to 0
+    public void restartPosition() {
+        // TODO: Reset rotation
+        rb.velocity = new Vector3(0, 0, 0);
         transform.position = new Vector3(0, 0, 0);
     }
 
@@ -90,10 +92,9 @@ public class SpaceShip : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
-        // TODO: Access gameController playerKilled method
-        // And remove the next line
-        this.gameObject.SetActive(false);
         Debug.Log("SpaceShipCollide");
+        gameController.gameObject.GetComponent<GameController>().playerKilled();
+       
 
     }
 }
