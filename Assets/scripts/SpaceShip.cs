@@ -81,4 +81,9 @@ public class SpaceShip : MonoBehaviour {
 			transform.position = new Vector3(pos.x, minY, pos.z);
 		}
     }
+
+    void OnCollisionEnter2D(Collision2D collision) {
+        this.gameObject.SetActive(false);
+        Debug.Log("SpaceShipCollide");
+    }
 }

@@ -14,6 +14,7 @@ public class Asteroid : MonoBehaviour {
     // Use this for initialization
     void Start () {
         rb = GetComponent<Rigidbody2D>();
+        Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
         setPosition();
         setInitialMovement();
     }
@@ -73,4 +74,5 @@ public class Asteroid : MonoBehaviour {
             transform.position = new Vector3(pos.x, minY, pos.z);
         }
     }
+
 }
