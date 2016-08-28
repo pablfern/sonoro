@@ -78,22 +78,40 @@ public class GameController : MonoBehaviour {
         livesText.GetComponent<UnityEngine.UI.Text>().text = "Lives:" + lives.ToString();
     }
 
+    void spawnAsteroid() {
+        if (Time.time > nextActionTime) {
+            nextActionTime += period;
+            GameObject obj = getAsteroid();
+            if (obj != null)
+            {
+                obj.SetActive(true);
+            }
+        }
+    }
+
+    void playerKilled() {
+        lives -= 1;
+        if(lives < 0) {
+            gameOver();
+        } else {
+            // TODO: access SpaceShip Class and restart position and force
+            spaceShip.gameObject.SetActive(true);
+        }
+    }
+
+    void gameOver() {
+        spaceShip.gameObject.SetActive(false);
+        livesText.gameObject.SetActive(false);
+        gameOverText.gameObject.SetActive(true);
+    }
+
     // Update is called once per frame
     void Update () {
         if (!gameStarted) { 
             checkInput();
         } else {
-        refreshScoreAndLives();
-
-        if (Time.time > nextActionTime)
-        {
-            nextActionTime += period;
-            GameObject obj = getAsteroid();
-            if (obj != null)
-            {
-                obj.active = true;
-            }
-        }
+            refreshScoreAndLives();
+            spawnAsteroid();
         }
     }
 }

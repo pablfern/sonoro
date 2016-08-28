@@ -56,6 +56,12 @@ public class SpaceShip : MonoBehaviour {
 		}
     }
 
+
+    void restartPosition() {
+        // TODO: Reset objects forces to 0
+        transform.position = new Vector3(0, 0, 0);
+    }
+
     void checkBoundaries() {
 
 		Vector3 pos = transform.position;
@@ -84,7 +90,10 @@ public class SpaceShip : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
+        // TODO: Access gameController playerKilled method
+        // And remove the next line
         this.gameObject.SetActive(false);
         Debug.Log("SpaceShipCollide");
+
     }
 }
