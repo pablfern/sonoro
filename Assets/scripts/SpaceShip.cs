@@ -16,6 +16,7 @@ public class SpaceShip : MonoBehaviour {
 
 	void Start () {
         //fireSprite.enabled = false;
+        this.gameObject.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
 		width = GetComponent<Renderer>().bounds.size.x;
 		height = GetComponent<Renderer>().bounds.size.y;

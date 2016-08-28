@@ -1,17 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
     public int lives;
     public int score;
     public int level;
+
     public GameObject asteroidPrefab;
+    public GameObject spaceShip;
+    public GameObject startText;
+    public GameObject scoreText;
+    public GameObject livesText;
+    public GameObject gameOverText;
+
     public int asteroidPoolSize;
     
     private float nextActionTime;
     public float period;
+    private bool gameStarted = false;
     private Stack<GameObject> inactiveAsteroidsStack;
 
     // pool de tiros
@@ -49,8 +58,33 @@ public class GameController : MonoBehaviour {
         inactiveAsteroidsStack.Push(asteroid);
     }
 
+    void checkInput() {
+        if (Input.GetKey(KeyCode.Return)) {
+            Debug.Log("Start!");
+            startGame();
+        }
+    }
+
+    void startGame() {
+        gameStarted = true;
+        startText.gameObject.SetActive(false);
+        scoreText.gameObject.SetActive(true);
+        livesText.gameObject.SetActive(true);
+        spaceShip.gameObject.SetActive(true);
+    }
+
+    void refreshScoreAndLives() {
+        scoreText.GetComponent<UnityEngine.UI.Text>().text = "Score: " + score.ToString();
+        livesText.GetComponent<UnityEngine.UI.Text>().text = "Lives:" + lives.ToString();
+    }
+
     // Update is called once per frame
     void Update () {
+        if (!gameStarted) { 
+            checkInput();
+        } else {
+        refreshScoreAndLives();
+
         if (Time.time > nextActionTime)
         {
             nextActionTime += period;
@@ -59,6 +93,7 @@ public class GameController : MonoBehaviour {
             {
                 obj.active = true;
             }
+        }
         }
     }
 }
