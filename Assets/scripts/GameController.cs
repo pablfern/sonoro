@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
+	public static GameController instance;
+
     public int lives;
     public int score;
     public int level;
@@ -130,4 +132,14 @@ public class GameController : MonoBehaviour {
             spawnAsteroid();
         }
     }
+
+	void Awake () {
+		if (instance == null) {
+			instance = this;
+		}
+
+		else if (instance != this) {
+			Destroy(gameObject); 
+		}
+	}
 }

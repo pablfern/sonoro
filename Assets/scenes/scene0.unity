@@ -539,7 +539,7 @@ GameObject:
   - 114: {fileID: 1070694722}
   - 50: {fileID: 1070694724}
   - 58: {fileID: 1070694723}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: shipsprite1_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -606,6 +606,7 @@ MonoBehaviour:
   rotationSpeed: 1
   width: 16
   height: 16
+  gameController: {fileID: 1026908432}
   bolt: {fileID: 50000012196124938, guid: b6fde9b1f37dd484e87d650a07584f45, type: 2}
   boltSpeed: 100
 --- !u!58 &1070694723

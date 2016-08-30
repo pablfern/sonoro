@@ -75,4 +75,13 @@ public class Asteroid : MonoBehaviour {
         }
     }
 
+	void OnCollisionEnter2D(Collision2D collision) {
+		if (collision.collider.CompareTag("bolt")) {
+			Debug.Log ("Destroy asteroid");
+//			gameController.gameObject.GetComponent<GameController> ().returnAsteroid (this.GetComponent<GameObject>());
+			GameController.instance.returnAsteroid(gameObject);
+		}
+
+	}
+
 }
