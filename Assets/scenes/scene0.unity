@@ -432,7 +432,7 @@ MonoBehaviour:
   asteroidPrefab: {fileID: 1000011012106104, guid: d71654c3afa7f8241b7d46ef146f1ccf,
     type: 2}
   starPrefab: {fileID: 1000014164025496, guid: e27528f0344884e4386b6413f55c9ec2, type: 2}
-  boltPrefab: {fileID: 1000011167852022, guid: b6fde9b1f37dd484e87d650a07584f45, type: 2}
+  boltPrefab: {fileID: 1000011421036602, guid: b6fde9b1f37dd484e87d650a07584f45, type: 2}
   spaceShip: {fileID: 1070694719}
   startText: {fileID: 337845310}
   scoreText: {fileID: 431599486}
