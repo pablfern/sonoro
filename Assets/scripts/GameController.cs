@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour {
 
     public GameObject asteroidPrefab;
 	public GameObject starPrefab;
+	public GameObject boltPrefab;
     public GameObject spaceShip;
     public GameObject startText;
     public GameObject scoreText;
@@ -21,6 +22,7 @@ public class GameController : MonoBehaviour {
 
     public int asteroidPoolSize;
 	public int starPoolSize;
+	public int boltPoolSize;
     
     private float nextActionTime;
 	private float nextStarActionTime;
@@ -31,6 +33,8 @@ public class GameController : MonoBehaviour {
     private LinkedList<GameObject> activeAsteroidList;
 	private LinkedList<GameObject> inactiveStarList;
 	private LinkedList<GameObject> activeStarList;
+
+	private LinkedList<GameObject> boltList;
 
     // pool de tiros
     // pool de Asteroides
@@ -47,6 +51,16 @@ public class GameController : MonoBehaviour {
 		this.starPeriod = 0.5f;
         createAsteroidPool();
 		createStarPool();
+		createBoltPool();
+	}
+
+	private void createBoltPool() {
+		boltList = new LinkedList<GameObject> ();
+		for (int i = 0 ; i < boltPoolSize ; i++) {
+			GameObject obj = (GameObject)Instantiate(boltPrefab);
+			obj.SetActive(false);
+			boltList.AddLast(obj);
+		}
 	}
 
     public void createAsteroidPool() {
@@ -59,7 +73,7 @@ public class GameController : MonoBehaviour {
             inactiveAsteroidList.AddLast(obj);
         }
     }
-
+		
 	public void createStarPool() {
 		inactiveStarList = new LinkedList<GameObject>();
 		activeStarList = new LinkedList<GameObject>();
@@ -69,6 +83,21 @@ public class GameController : MonoBehaviour {
 			obj.SetActive (false);
 			inactiveStarList.AddLast(obj);
 		}
+	}
+
+	public GameObject getBolt() {
+		if (boltList.Count > 0) {
+			GameObject obj = boltList.First.Value;
+			obj.SetActive (true);
+			boltList.RemoveFirst ();
+			return obj;
+		}
+		return null;
+	}
+
+	public void returnBolt(GameObject bolt) {
+		bolt.SetActive (false);
+		boltList.AddLast (bolt);
 	}
 
     public GameObject getAsteroid() {

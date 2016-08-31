@@ -48,12 +48,10 @@ public class SpaceShip : MonoBehaviour {
             rb.AddForce(new Vector2(x * (Time.deltaTime + rotationSpeed), y * (Time.deltaTime + rotationSpeed)));
         }
 		if (Input.GetKeyDown(KeyCode.Space)) {
-			Debug.Log ("SHOOT!");
-			float angle = transform.rotation.eulerAngles.z + 90;
-			float x = Mathf.Cos(angle * Mathf.Deg2Rad);
-			float y = Mathf.Sin(angle * Mathf.Deg2Rad);
-			Rigidbody2D boltInstance = Instantiate(bolt, transform.position, Quaternion.Euler(new Vector3(0, 0, 0))) as Rigidbody2D;
-			boltInstance.AddForce(new Vector2(x * boltSpeed, y * boltSpeed));
+			GameObject bolt = GameController.instance.getBolt ();
+			bolt.transform.position = transform.position;
+			bolt.transform.rotation = transform.rotation;
+			bolt.GetComponent<Bolt> ().setCreationTime ();
 		}
     }
 
@@ -91,10 +89,17 @@ public class SpaceShip : MonoBehaviour {
 		}
     }
 
-    void OnCollisionEnter2D(Collision2D collision) {
-        Debug.Log("SpaceShipCollide");
-        gameController.gameObject.GetComponent<GameController>().playerKilled();
-       
+//    void OnCollisionEnter2D(Collision2D collision) {
+//        Debug.Log("SpaceShipCollide");
+//        gameController.gameObject.GetComponent<GameController>().playerKilled();
+//       
+//
+//    }
 
-    }
+	void OnTriggerEnter2D(Collider2D collider) {
+		Debug.Log("SpaceShipCollide");
+		gameController.gameObject.GetComponent<GameController>().playerKilled();
+
+
+	}
 }
