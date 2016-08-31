@@ -21,6 +21,7 @@ GameObject:
   - 4: {fileID: 4000012744886238}
   - 33: {fileID: 33000012313241378}
   - 23: {fileID: 23000014251139188}
+  - 114: {fileID: 114000013309089984}
   m_Layer: 10
   m_Name: VFX
   m_TagString: Untagged
@@ -134,8 +135,21 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &114000013309089984
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011167852022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58b06e97b477b4b329ef1cd999c8f931, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocity: 10
+  ttl: 3

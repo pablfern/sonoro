@@ -431,12 +431,14 @@ MonoBehaviour:
   level: 0
   asteroidPrefab: {fileID: 1000011012106104, guid: d71654c3afa7f8241b7d46ef146f1ccf,
     type: 2}
+  boltPrefab: {fileID: 1000011167852022, guid: b6fde9b1f37dd484e87d650a07584f45, type: 2}
   spaceShip: {fileID: 1070694719}
   startText: {fileID: 337845310}
   scoreText: {fileID: 431599486}
   livesText: {fileID: 1054036629}
   gameOverText: {fileID: 1637931323}
   asteroidPoolSize: 20
+  boltPoolSize: 20
   period: 0
 --- !u!4 &1026908434
 Transform:
@@ -540,7 +542,7 @@ GameObject:
   - 50: {fileID: 1070694724}
   - 58: {fileID: 1070694723}
   m_Layer: 9
-  m_Name: shipsprite1_1
+  m_Name: Spaceship
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -618,7 +620,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2

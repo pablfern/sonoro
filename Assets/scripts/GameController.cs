@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour {
     public int level;
 
     public GameObject asteroidPrefab;
+	public GameObject boltPrefab;
     public GameObject spaceShip;
     public GameObject startText;
     public GameObject scoreText;
@@ -19,12 +20,15 @@ public class GameController : MonoBehaviour {
     public GameObject gameOverText;
 
     public int asteroidPoolSize;
+	public int boltPoolSize;
     
     private float nextActionTime;
     public float period;
     private bool gameStarted = false;
     private LinkedList<GameObject> inactiveAsteroidList;
     private LinkedList<GameObject> activeAsteroidList;
+
+	private LinkedList<GameObject> boltList;
 
     // pool de tiros
     // pool de Asteroides
@@ -38,6 +42,16 @@ public class GameController : MonoBehaviour {
         this.nextActionTime = 0.0f;
         this.period = 3.0f;
         createAsteroidPool();
+		createBoltPool ();
+	}
+
+	private void createBoltPool() {
+		boltList = new LinkedList<GameObject> ();
+		for (int i = 0 ; i < boltPoolSize ; i++) {
+			GameObject obj = (GameObject)Instantiate(boltPrefab);
+			obj.SetActive(false);
+			boltList.AddLast(obj);
+		}
 	}
 
     public void createAsteroidPool() {
@@ -50,6 +64,21 @@ public class GameController : MonoBehaviour {
             inactiveAsteroidList.AddLast(obj);
         }
     }
+
+	public GameObject getBolt() {
+		if (boltList.Count > 0) {
+			GameObject obj = boltList.First.Value;
+			obj.SetActive (true);
+			boltList.RemoveFirst ();
+			return obj;
+		}
+		return null;
+	}
+
+	public void returnBolt(GameObject bolt) {
+		bolt.SetActive (false);
+		boltList.AddLast (bolt);
+	}
 
     public GameObject getAsteroid() {
         if (inactiveAsteroidList.Count > 0 ) {
