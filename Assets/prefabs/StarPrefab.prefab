@@ -21,7 +21,8 @@ GameObject:
   - 4: {fileID: 4000011867199892}
   - 212: {fileID: 212000012220134806}
   - 114: {fileID: 114000012070669976}
-  m_Layer: 0
+  - 50: {fileID: 50000010305506810}
+  m_Layer: 10
   m_Name: StarPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,6 +42,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!50 &50000010305506810
+Rigidbody2D:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000014164025496}
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!114 &114000012070669976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -52,8 +70,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b268aabedb39401387bbc7741576ace, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 3
+  height: 3
+  rotationSpeed: 20
 --- !u!212 &212000012220134806
 SpriteRenderer:
   m_ObjectHideFlags: 1

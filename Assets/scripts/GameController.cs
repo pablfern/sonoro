@@ -48,7 +48,7 @@ public class GameController : MonoBehaviour {
         this.nextActionTime = 0.0f;
 		this.nextStarActionTime = 0.0f;
         this.period = 3.0f;
-		this.starPeriod = 0.5f;
+		this.starPeriod = 1.0f;
         createAsteroidPool();
 		createStarPool();
 		createBoltPool();
@@ -130,6 +130,9 @@ public class GameController : MonoBehaviour {
 		star.SetActive(false);
 		activeStarList.Remove(star);
 		inactiveStarList.AddLast(star);
+		Debug.Log ("en return");
+		Debug.Log(string.Format("inactive count: {0}",inactiveStarList.Count));
+		Debug.Log(string.Format("active count: {0}",activeStarList.Count));
 	}
 
     void checkInput() {
@@ -165,12 +168,13 @@ public class GameController : MonoBehaviour {
 
 	void spawnStars() {
 		if (Time.time > nextStarActionTime) {
+			Debug.Log("en spawn if");
 			nextStarActionTime += starPeriod;
-			for (int i = 0; i < inactiveStarList.Count; i++) {
-				GameObject obj = getStar();
-				if (obj != null) {
-					obj.SetActive (true);
-				}
+			Debug.Log(string.Format("inactive count: {0}",inactiveStarList.Count));
+			GameObject obj = getStar();
+			if (obj != null) {
+				obj.SetActive (true);
+				Debug.Log("activating");
 			}
 		}
 	}
