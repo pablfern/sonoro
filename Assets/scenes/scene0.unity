@@ -439,7 +439,7 @@ MonoBehaviour:
   livesText: {fileID: 1054036629}
   gameOverText: {fileID: 1637931323}
   asteroidPoolSize: 20
-  starPoolSize: 20
+  starPoolSize: 50
   boltPoolSize: 20
   period: 1
   starPeriod: 3
