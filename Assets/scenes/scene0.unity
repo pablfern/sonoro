@@ -441,7 +441,7 @@ MonoBehaviour:
   asteroidPoolSize: 20
   starPoolSize: 20
   boltPoolSize: 20
-  period: 3
+  period: 1
   starPeriod: 3
 --- !u!4 &1026908434
 Transform:
@@ -608,7 +608,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70bf39e20a4204f429607bf3cdc94d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 1
+  rotationSpeed: 5
+  drag: 1
   width: 16
   height: 16
   gameController: {fileID: 1026908432}

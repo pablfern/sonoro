@@ -5,7 +5,8 @@ using System;
 public class SpaceShip : MonoBehaviour {
 
     //public SpriteRenderer fireSprite;
-    public float rotationSpeed = 2.0f;
+    public float rotationSpeed = 10.0f;
+	public float drag = 2.0f;
 	public float width;
 	public float height;
     public GameObject gameController;
@@ -13,7 +14,7 @@ public class SpaceShip : MonoBehaviour {
 
     private Rigidbody2D rb;
 	public Rigidbody2D bolt;
-	public float boltSpeed = 10f;
+	public float boltSpeed = 10.0f;
 
 	void Start () {
         //fireSprite.enabled = false;
@@ -27,6 +28,12 @@ public class SpaceShip : MonoBehaviour {
 	void Update () {
         checkInput();
 		checkBoundaries();
+		slowDown ();
+	}
+
+	void slowDown () {
+		Vector2 startVelocity = rb.velocity;
+		rb.velocity = Vector2.Lerp (startVelocity, new Vector2 (0, 0), Time.deltaTime * drag);
 	}
 
     void checkInput() {
@@ -41,12 +48,13 @@ public class SpaceShip : MonoBehaviour {
             float y = Mathf.Sin(angle * Mathf.Deg2Rad);
             rb.AddForce(new Vector2(x * (Time.deltaTime + rotationSpeed), y * (Time.deltaTime + rotationSpeed)));
         }
-        if (Input.GetKey(KeyCode.DownArrow)) {
-            float angle = transform.rotation.eulerAngles.z - 90;
-            float x = Mathf.Cos(angle * Mathf.Deg2Rad);
-            float y = Mathf.Sin(angle * Mathf.Deg2Rad);
-            rb.AddForce(new Vector2(x * (Time.deltaTime + rotationSpeed), y * (Time.deltaTime + rotationSpeed)));
-        }
+		// XXX: se saca el desplazamiento hacia atrás
+//        if (Input.GetKey(KeyCode.DownArrow)) {
+//            float angle = transform.rotation.eulerAngles.z - 90;
+//            float x = Mathf.Cos(angle * Mathf.Deg2Rad);
+//            float y = Mathf.Sin(angle * Mathf.Deg2Rad);
+//            rb.AddForce(new Vector2(x * (Time.deltaTime + rotationSpeed), y * (Time.deltaTime + rotationSpeed)));
+//        }
 		if (Input.GetKeyDown(KeyCode.Space)) {
 			GameObject bolt = GameController.instance.getBolt ();
 			bolt.transform.position = transform.position;

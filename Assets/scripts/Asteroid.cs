@@ -15,9 +15,13 @@ public class Asteroid : MonoBehaviour {
     void Start () {
         rb = GetComponent<Rigidbody2D>();
         Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
-        setPosition();
-        setInitialMovement();
+		resetAsteroid ();
     }
+
+	public void resetAsteroid() {
+		setPosition ();
+		setInitialMovement ();
+	}
 
     void setPosition() {
         float screenWidth = Screen.width;
@@ -26,10 +30,10 @@ public class Asteroid : MonoBehaviour {
     }
 
     void setInitialMovement() {
-        rb.AddTorque(0.5f, ForceMode2D.Impulse);
+		GetComponent<Rigidbody2D>().AddTorque(0.5f, ForceMode2D.Impulse);
         xForce = Random.Range(-4, 4) * (Time.deltaTime + rotationSpeed);
         yForce = Random.Range(-4, 4) * (Time.deltaTime + rotationSpeed);
-        rb.AddForce(new Vector2(xForce, yForce));
+		GetComponent<Rigidbody2D>().AddForce(new Vector2(xForce, yForce));
     }
 
     void move() {

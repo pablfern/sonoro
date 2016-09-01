@@ -105,6 +105,7 @@ public class GameController : MonoBehaviour {
             GameObject obj = inactiveAsteroidList.First.Value;
             inactiveAsteroidList.RemoveFirst();
             activeAsteroidList.AddLast(obj);
+			obj.GetComponent<Asteroid> ().resetAsteroid();
             return obj;
         }
         return null;
