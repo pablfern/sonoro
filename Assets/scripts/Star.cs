@@ -17,7 +17,7 @@ public class Star : MonoBehaviour {
 		rb = GetComponent<Rigidbody2D>();
 		Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
 		setPosition();
-		Debug.Log ("en start");
+//		Debug.Log ("en start");
 		setInitialMovement();
 	}
 	
@@ -29,7 +29,7 @@ public class Star : MonoBehaviour {
 	void setPosition() {
 		float screenWidth = Screen.width;
 		float screenHeight = Screen.height;
-		Debug.Log ("en set position");
+//		Debug.Log ("en set position");
 		//transform.position = new Vector2( Random.Range(-screenWidth, screenWidth), Random.Range(-screenHeight, screenHeight));
 		transform.position = new Vector3(Random.Range(-6.0f, 6.0f), Random.Range(5.0f, 6.0f), 0);
 	}
@@ -66,9 +66,9 @@ public class Star : MonoBehaviour {
 	}
 
 	void OnBecameInvisible () {
-		Debug.Log ("en invisible");
+//		Debug.Log ("en invisible");
 		Vector3 pos = transform.position;
-		Debug.Log (string.Format ("pos x y : {0}, {1}", pos.x, pos.y));
+//		Debug.Log (string.Format ("pos x y : {0}, {1}", pos.x, pos.y));
 		setPosition ();
 		GameController.instance.returnStar(gameObject);
 	}

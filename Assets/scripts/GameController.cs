@@ -11,7 +11,10 @@ public class GameController : MonoBehaviour {
     public int score;
     public int level;
 
-    public GameObject asteroidPrefab;
+    public GameObject largeAsteroidPrefab;
+	public GameObject mediumAsteroidPrefab;
+	public GameObject smallAsteroidPrefab;
+
 	public GameObject starPrefab;
 	public GameObject boltPrefab;
     public GameObject spaceShip;
@@ -21,6 +24,8 @@ public class GameController : MonoBehaviour {
     public GameObject gameOverText;
 
     public int asteroidPoolSize;
+	public int mediumAsteroidPoolSize;
+	public int smallAsteroidPoolSize;
 	public int starPoolSize;
 	public int boltPoolSize;
     
@@ -33,6 +38,9 @@ public class GameController : MonoBehaviour {
     private LinkedList<GameObject> activeAsteroidList;
 	private LinkedList<GameObject> inactiveStarList;
 	private LinkedList<GameObject> activeStarList;
+
+	private LinkedList<GameObject> mediumAsteroidList;
+	private LinkedList<GameObject> smallAsteroidList;
 
 	private LinkedList<GameObject> boltList;
 
@@ -52,6 +60,26 @@ public class GameController : MonoBehaviour {
         createAsteroidPool();
 		createStarPool();
 		createBoltPool();
+		createMediumAsteroidPool ();
+		createSmallAsteroidPool ();
+	}
+
+	private void createMediumAsteroidPool() {
+		mediumAsteroidList = new LinkedList<GameObject> ();
+		for (int i = 0 ; i < mediumAsteroidPoolSize ; i++) {
+			GameObject obj = (GameObject)Instantiate(mediumAsteroidPrefab);
+			obj.SetActive(false);
+			mediumAsteroidList.AddLast(obj);
+		}
+	}
+
+	private void createSmallAsteroidPool() {
+		smallAsteroidList = new LinkedList<GameObject> ();
+		for (int i = 0 ; i < smallAsteroidPoolSize ; i++) {
+			GameObject obj = (GameObject)Instantiate(smallAsteroidPrefab);
+			obj.SetActive(false);
+			smallAsteroidList.AddLast(obj);
+		}
 	}
 
 	private void createBoltPool() {
@@ -68,7 +96,7 @@ public class GameController : MonoBehaviour {
         activeAsteroidList = new LinkedList<GameObject>();
         for (int i = 0; i < this.asteroidPoolSize; i++)
         {
-            GameObject obj = (GameObject)Instantiate(asteroidPrefab);
+            GameObject obj = (GameObject)Instantiate(largeAsteroidPrefab);
             obj.SetActive(false);
             inactiveAsteroidList.AddLast(obj);
         }
@@ -83,6 +111,23 @@ public class GameController : MonoBehaviour {
 			obj.SetActive (false);
 			inactiveStarList.AddLast(obj);
 		}
+	}
+
+	public GameObject getMediumAsteroid(float x, float y) {
+		if (mediumAsteroidList.Count > 0) {
+			GameObject obj = mediumAsteroidList.First.Value;
+			obj.SetActive (true);
+			mediumAsteroidList.RemoveFirst ();
+			obj.GetComponent<Asteroid> ().setPosition(x, y);
+			Debug.Log ("ObjPosX = " + obj.transform.position.x + " - ObjPosY = " + obj.transform.position.y);
+			return obj;
+		}
+		return null;
+	}
+
+	public void returnMediumAsteroid(GameObject mediumAsteroid) {
+		mediumAsteroid.SetActive (false);
+		mediumAsteroidList.AddLast (mediumAsteroid);
 	}
 
 	public GameObject getBolt() {
@@ -131,14 +176,14 @@ public class GameController : MonoBehaviour {
 		star.SetActive(false);
 		activeStarList.Remove(star);
 		inactiveStarList.AddLast(star);
-		Debug.Log ("en return");
-		Debug.Log(string.Format("inactive count: {0}",inactiveStarList.Count));
-		Debug.Log(string.Format("active count: {0}",activeStarList.Count));
+//		Debug.Log ("en return");
+//		Debug.Log(string.Format("inactive count: {0}",inactiveStarList.Count));
+//		Debug.Log(string.Format("active count: {0}",activeStarList.Count));
 	}
 
     void checkInput() {
         if (Input.GetKey(KeyCode.Return)) {
-            Debug.Log("Start!");
+//            Debug.Log("Start!");
             startGame();
         }
     }
@@ -169,13 +214,13 @@ public class GameController : MonoBehaviour {
 
 	void spawnStars() {
 		if (Time.time > nextStarActionTime) {
-			Debug.Log("en spawn if");
+//			Debug.Log("en spawn if");
 			nextStarActionTime += starPeriod;
-			Debug.Log(string.Format("inactive count: {0}",inactiveStarList.Count));
+//			Debug.Log(string.Format("inactive count: {0}",inactiveStarList.Count));
 			GameObject obj = getStar();
 			if (obj != null) {
 				obj.SetActive (true);
-				Debug.Log("activating");
+//				Debug.Log("activating");
 			}
 		}
 	}

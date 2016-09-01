@@ -429,7 +429,11 @@ MonoBehaviour:
   lives: 0
   score: 0
   level: 0
-  asteroidPrefab: {fileID: 1000011012106104, guid: d71654c3afa7f8241b7d46ef146f1ccf,
+  largeAsteroidPrefab: {fileID: 1000010755882984, guid: bdf37ad82dcb54771b5578482b8a87a8,
+    type: 2}
+  mediumAsteroidPrefab: {fileID: 1000011289696814, guid: 305a0ed07dc15434083b1db57c38958c,
+    type: 2}
+  smallAsteroidPrefab: {fileID: 1000010862290904, guid: 60e7f2eeae135439dbcb8fc577ce47fe,
     type: 2}
   starPrefab: {fileID: 1000014164025496, guid: e27528f0344884e4386b6413f55c9ec2, type: 2}
   boltPrefab: {fileID: 1000011421036602, guid: b6fde9b1f37dd484e87d650a07584f45, type: 2}
@@ -439,6 +443,8 @@ MonoBehaviour:
   livesText: {fileID: 1054036629}
   gameOverText: {fileID: 1637931323}
   asteroidPoolSize: 20
+  mediumAsteroidPoolSize: 40
+  smallAsteroidPoolSize: 80
   starPoolSize: 50
   boltPoolSize: 20
   period: 1
