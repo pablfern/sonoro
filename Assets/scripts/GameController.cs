@@ -119,7 +119,6 @@ public class GameController : MonoBehaviour {
 			obj.SetActive (true);
 			mediumAsteroidList.RemoveFirst ();
 			obj.GetComponent<Asteroid> ().setPosition(x, y);
-			Debug.Log ("ObjPosX = " + obj.transform.position.x + " - ObjPosY = " + obj.transform.position.y);
 			return obj;
 		}
 		return null;
