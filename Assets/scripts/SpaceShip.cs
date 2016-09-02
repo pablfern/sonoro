@@ -15,6 +15,8 @@ public class SpaceShip : MonoBehaviour {
     private Rigidbody2D rb;
 	public Rigidbody2D bolt;
 	public float boltSpeed = 10.0f;
+	public AudioSource boltAudio;
+	public AudioSource collisionAudio;
 
 	void Start () {
         //fireSprite.enabled = false;
@@ -60,6 +62,7 @@ public class SpaceShip : MonoBehaviour {
 			bolt.transform.position = transform.position;
 			bolt.transform.rotation = transform.rotation;
 			bolt.GetComponent<Bolt> ().setCreationTime ();
+			boltAudio.Play ();
 		}
     }
 
@@ -106,8 +109,7 @@ public class SpaceShip : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D collider) {
 		Debug.Log("SpaceShipCollide");
+		collisionAudio.Play ();
 		gameController.gameObject.GetComponent<GameController>().playerKilled();
-
-
 	}
 }

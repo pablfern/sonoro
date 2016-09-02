@@ -28,6 +28,9 @@ public class GameController : MonoBehaviour {
 	public int smallAsteroidPoolSize;
 	public int starPoolSize;
 	public int boltPoolSize;
+
+	public AudioSource backgroundMusic;
+	public AudioSource gameOverMusic;
     
     private float nextActionTime;
 	private float nextStarActionTime;
@@ -62,6 +65,7 @@ public class GameController : MonoBehaviour {
 		createBoltPool();
 		createMediumAsteroidPool ();
 		createSmallAsteroidPool ();
+		backgroundMusic.Play ();
 	}
 
 	private void createMediumAsteroidPool() {
@@ -244,6 +248,7 @@ public class GameController : MonoBehaviour {
     }
 
     void gameOver() {
+		gameOverMusic.Play ();
         spaceShip.gameObject.SetActive(false);
         livesText.gameObject.SetActive(false);
         gameOverText.gameObject.SetActive(true);
