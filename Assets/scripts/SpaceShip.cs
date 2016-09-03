@@ -49,6 +49,7 @@ public class SpaceShip : MonoBehaviour {
             float x = Mathf.Cos(angle * Mathf.Deg2Rad);
             float y = Mathf.Sin(angle * Mathf.Deg2Rad);
             rb.AddForce(new Vector2(x * (Time.deltaTime + rotationSpeed), y * (Time.deltaTime + rotationSpeed)));
+
         }
 		// XXX: se saca el desplazamiento hacia atrás
 //        if (Input.GetKey(KeyCode.DownArrow)) {

@@ -203,7 +203,7 @@ public class GameController : MonoBehaviour {
         createMediumAsteroidPool();
         createSmallAsteroidPool();
         backgroundMusic.Play();
-
+        spaceShip.gameObject.GetComponent<SpaceShip>().restartPosition();
         gameOverText.gameObject.SetActive(false);
         startText.gameObject.SetActive(false);
         scoreText.gameObject.SetActive(true);
