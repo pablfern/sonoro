@@ -6,6 +6,8 @@ public class Asteroid : MonoBehaviour {
     public float width;
     public float height;
     public float rotationSpeed = 2.0f;
+    public int score;
+
     private float xForce;
     private float yForce;
 
@@ -69,9 +71,11 @@ public class Asteroid : MonoBehaviour {
 				GameController.instance.getMediumAsteroid (prevPositionX, prevPositionY);
 //				GameController.instance.getMediumAsteroid (prevPositionX, prevPositionY);
 				GameController.instance.returnAsteroid(gameObject);
+                GameController.instance.addScore(score);
 			} else if (gameObject.CompareTag("mediumAsteroid")) {
 				GameController.instance.returnMediumAsteroid(gameObject);
-			}
+                GameController.instance.addScore(score);
+            }
 		}
 
 	}

@@ -274,4 +274,8 @@ public class GameController : MonoBehaviour {
 			Destroy(gameObject); 
 		}
 	}
+
+    public void addScore(int score) {
+        this.score += score;
+    }
 }

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class LargeAsteroid : Asteroid {
 
-	public override void resetAsteroid() {
+    public override void resetAsteroid() {
 		setPosition ();
 		base.setInitialMovement ();
 
@@ -14,4 +14,5 @@ public class LargeAsteroid : Asteroid {
 		float screenHeight = Screen.height;
 		transform.position = new Vector2( Random.Range(-screenWidth, screenWidth), Random.Range(-screenHeight, screenHeight));
 	}
+
 }
