@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour {
 
     public int lives;
     public int score;
-    public int level;
+    public int highScore;
 
     public GameObject largeAsteroidPrefab;
 	public GameObject mediumAsteroidPrefab;
@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour {
     public GameObject spaceShip;
     public GameObject startText;
     public GameObject scoreText;
+    public GameObject highScoreText;
     public GameObject livesText;
     public GameObject gameOverText;
 
@@ -55,7 +56,6 @@ public class GameController : MonoBehaviour {
     void Start () {
         this.lives = 3;
         this.score = 0;
-        this.level = 1;
         this.nextActionTime = 0.0f;
 		this.nextStarActionTime = 0.0f;
         this.period = 3.0f;
@@ -197,6 +197,7 @@ public class GameController : MonoBehaviour {
         scoreText.gameObject.SetActive(true);
         livesText.gameObject.SetActive(true);
         spaceShip.gameObject.SetActive(true);
+        highScoreText.gameObject.SetActive(true);
     }
 
     void refreshScoreAndLives() {
@@ -248,9 +249,15 @@ public class GameController : MonoBehaviour {
     }
 
     void gameOver() {
+        if(score > highScore && score > 0) {
+            highScore = score;
+            gameOverText.GetComponent<UnityEngine.UI.Text>().text = "Game Over!\n New high Score!\n" + score.ToString();
+        }
 		gameOverMusic.Play ();
         spaceShip.gameObject.SetActive(false);
         livesText.gameObject.SetActive(false);
+        scoreText.gameObject.SetActive(false);
+        highScoreText.gameObject.SetActive(false);
         gameOverText.gameObject.SetActive(true);
     }
 

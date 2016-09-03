@@ -104,6 +104,7 @@ MonoBehaviour:
   width: 0
   height: 0
   rotationSpeed: 30
+  score: 50
 --- !u!114 &114000013094799856
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -118,6 +119,7 @@ MonoBehaviour:
   width: 0
   height: 0
   rotationSpeed: 30
+  score: 0
 --- !u!212 &212000010498736370
 SpriteRenderer:
   m_ObjectHideFlags: 1
