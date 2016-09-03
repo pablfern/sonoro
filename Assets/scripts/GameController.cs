@@ -54,8 +54,6 @@ public class GameController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        this.lives = 3;
-        this.score = 0;
         this.nextActionTime = 0.0f;
 		this.nextStarActionTime = 0.0f;
         this.period = 3.0f;
@@ -65,7 +63,6 @@ public class GameController : MonoBehaviour {
 		createBoltPool();
 		createMediumAsteroidPool ();
 		createSmallAsteroidPool ();
-		backgroundMusic.Play ();
 	}
 
 	private void createMediumAsteroidPool() {
@@ -193,6 +190,21 @@ public class GameController : MonoBehaviour {
 
     void startGame() {
         gameStarted = true;
+
+        this.lives = 3;
+        this.score = 0;
+        this.nextActionTime = 0.0f;
+        this.nextStarActionTime = 0.0f;
+        this.period = 3.0f;
+        this.starPeriod = 1.0f;
+        createAsteroidPool();
+        createStarPool();
+        createBoltPool();
+        createMediumAsteroidPool();
+        createSmallAsteroidPool();
+        backgroundMusic.Play();
+
+        gameOverText.gameObject.SetActive(false);
         startText.gameObject.SetActive(false);
         scoreText.gameObject.SetActive(true);
         livesText.gameObject.SetActive(true);
@@ -251,7 +263,9 @@ public class GameController : MonoBehaviour {
     void gameOver() {
         if(score > highScore && score > 0) {
             highScore = score;
-            gameOverText.GetComponent<UnityEngine.UI.Text>().text = "Game Over!\n New high Score!\n" + score.ToString();
+            gameOverText.GetComponent<UnityEngine.UI.Text>().text = "Game Over!\n New high Score!\n" + score.ToString() + "\n Press ENTER to try again";
+        } else {
+            gameOverText.GetComponent<UnityEngine.UI.Text>().text = "Game Over!\n Press ENTER to try again";
         }
 		gameOverMusic.Play ();
         spaceShip.gameObject.SetActive(false);
@@ -259,6 +273,7 @@ public class GameController : MonoBehaviour {
         scoreText.gameObject.SetActive(false);
         highScoreText.gameObject.SetActive(false);
         gameOverText.gameObject.SetActive(true);
+        gameStarted = false;
     }
 
     // Update is called once per frame
