@@ -55,6 +55,7 @@ public class GameController : MonoBehaviour {
 		this.nextStarActionTime = 0.0f;
         this.period = 3.0f;
 		this.starPeriod = 1.0f;
+      //  this.highScore = 0;
         createAsteroidPool();
 		createStarPool();
 		createBoltPool();
@@ -194,12 +195,17 @@ public class GameController : MonoBehaviour {
         scoreText.gameObject.SetActive(true);
         livesText.gameObject.SetActive(true);
         spaceShip.gameObject.SetActive(true);
-        highScoreText.gameObject.SetActive(true);
+        if(highScore>0) {
+            highScoreText.gameObject.SetActive(true);
+        } else {
+            highScoreText.gameObject.SetActive(false);
+        }
     }
 
     void refreshScoreAndLives() {
         scoreText.GetComponent<UnityEngine.UI.Text>().text = "Score: " + score.ToString();
         livesText.GetComponent<UnityEngine.UI.Text>().text = "Lives: " + lives.ToString();
+        highScoreText.GetComponent<UnityEngine.UI.Text>().text = "High Score: " + highScore.ToString();
     }
 
     void spawnAsteroid() {
@@ -247,6 +253,9 @@ public class GameController : MonoBehaviour {
     void gameOver() {
         if(score > highScore && score > 0) {
             highScore = score;
+            Debug.Log(highScore);
+            Debug.Log(score);
+            highScoreText.GetComponent<UnityEngine.UI.Text>().text = "High score: " + highScore.ToString();
             gameOverText.GetComponent<UnityEngine.UI.Text>().text = "Game Over!\n New high Score!\n" + score.ToString() + "\n Press ENTER to try again";
         } else {
             gameOverText.GetComponent<UnityEngine.UI.Text>().text = "Game Over!\n Press ENTER to try again";
