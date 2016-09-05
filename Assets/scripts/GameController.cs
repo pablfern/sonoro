@@ -38,15 +38,12 @@ public class GameController : MonoBehaviour {
     public float period;
 	public float starPeriod;
     private bool gameStarted = false;
-    private LinkedList<GameObject> inactiveAsteroidList;
-    private LinkedList<GameObject> activeAsteroidList;
-	private LinkedList<GameObject> inactiveStarList;
-	private LinkedList<GameObject> activeStarList;
 
-	private LinkedList<GameObject> mediumAsteroidList;
-	private LinkedList<GameObject> smallAsteroidList;
-
-	private LinkedList<GameObject> boltList;
+    private List<GameObject> largeAsteroidList;
+	private List<GameObject> mediumAsteroidList;
+	private List<GameObject> smallAsteroidList;
+	private List<GameObject> starList;
+	private List<GameObject> boltList;
 
     // pool de tiros
     // pool de Asteroides
@@ -66,60 +63,57 @@ public class GameController : MonoBehaviour {
 	}
 
 	private void createMediumAsteroidPool() {
-		mediumAsteroidList = new LinkedList<GameObject> ();
+		mediumAsteroidList = new List<GameObject> ();
 		for (int i = 0 ; i < mediumAsteroidPoolSize ; i++) {
 			GameObject obj = (GameObject)Instantiate(mediumAsteroidPrefab);
 			obj.SetActive(false);
-			mediumAsteroidList.AddLast(obj);
+			mediumAsteroidList.Add(obj);
 		}
 	}
 
 	private void createSmallAsteroidPool() {
-		smallAsteroidList = new LinkedList<GameObject> ();
+		smallAsteroidList = new List<GameObject> ();
 		for (int i = 0 ; i < smallAsteroidPoolSize ; i++) {
 			GameObject obj = (GameObject)Instantiate(smallAsteroidPrefab);
 			obj.SetActive(false);
-			smallAsteroidList.AddLast(obj);
+			smallAsteroidList.Add(obj);
 		}
 	}
 
 	private void createBoltPool() {
-		boltList = new LinkedList<GameObject> ();
+		boltList = new List<GameObject> ();
 		for (int i = 0 ; i < boltPoolSize ; i++) {
 			GameObject obj = (GameObject)Instantiate(boltPrefab);
 			obj.SetActive(false);
-			boltList.AddLast(obj);
+			boltList.Add(obj);
 		}
 	}
 
     public void createAsteroidPool() {
-        inactiveAsteroidList = new LinkedList<GameObject>();
-        activeAsteroidList = new LinkedList<GameObject>();
-        for (int i = 0; i < this.asteroidPoolSize; i++)
-        {
-            GameObject obj = (GameObject)Instantiate(largeAsteroidPrefab);
-            obj.SetActive(false);
-            inactiveAsteroidList.AddLast(obj);
-        }
+		largeAsteroidList = new List<GameObject> ();
+		for (int i = 0 ; i < this.asteroidPoolSize ; i++) {
+			GameObject obj = (GameObject)Instantiate(largeAsteroidPrefab);
+			obj.SetActive(false);
+			largeAsteroidList.Add(obj);
+		}
     }
 		
 	public void createStarPool() {
-		inactiveStarList = new LinkedList<GameObject>();
-		activeStarList = new LinkedList<GameObject>();
-		for (int i = 0; i < this.starPoolSize; i++) 
-		{
+		starList = new List<GameObject>();
+		for (int i = 0 ; i < this.starPoolSize ; i++) {
 			GameObject obj = (GameObject)Instantiate(starPrefab);
 			obj.SetActive (false);
-			inactiveStarList.AddLast(obj);
+			starList.Add(obj);
 		}
 	}
 
 	public GameObject getMediumAsteroid(float x, float y) {
 		if (mediumAsteroidList.Count > 0) {
-			GameObject obj = mediumAsteroidList.First.Value;
+			GameObject obj = mediumAsteroidList[0];
 			obj.SetActive (true);
-			mediumAsteroidList.RemoveFirst ();
+			mediumAsteroidList.RemoveAt (0);
 			obj.GetComponent<Asteroid> ().setPosition(x, y);
+			obj.GetComponent<MediumAsteroid> ().resetAsteroid ();
 			return obj;
 		}
 		return null;
@@ -127,14 +121,14 @@ public class GameController : MonoBehaviour {
 
 	public void returnMediumAsteroid(GameObject mediumAsteroid) {
 		mediumAsteroid.SetActive (false);
-		mediumAsteroidList.AddLast (mediumAsteroid);
+		mediumAsteroidList.Add (mediumAsteroid);
 	}
 
 	public GameObject getBolt() {
 		if (boltList.Count > 0) {
-			GameObject obj = boltList.First.Value;
+			GameObject obj = boltList[0];
 			obj.SetActive (true);
-			boltList.RemoveFirst ();
+			boltList.RemoveAt (0);
 			return obj;
 		}
 		return null;
@@ -142,48 +136,39 @@ public class GameController : MonoBehaviour {
 
 	public void returnBolt(GameObject bolt) {
 		bolt.SetActive (false);
-		boltList.AddLast (bolt);
+		boltList.Add (bolt);
 	}
 
     public GameObject getAsteroid() {
-        if (inactiveAsteroidList.Count > 0 ) {
-            GameObject obj = inactiveAsteroidList.First.Value;
-            inactiveAsteroidList.RemoveFirst();
-            activeAsteroidList.AddLast(obj);
-			obj.GetComponent<Asteroid> ().resetAsteroid();
+        if (largeAsteroidList.Count > 0 ) {
+			GameObject obj = largeAsteroidList[0];
+			largeAsteroidList.RemoveAt(0);
             return obj;
         }
         return null;
     }
+		
+	public void returnAsteroid(GameObject asteroid) {
+		largeAsteroidList.Add(asteroid);
+		asteroid.SetActive(false);
+	}
 
 	public GameObject getStar() {
-		if (inactiveStarList.Count > 0) {
-			GameObject obj = inactiveStarList.First.Value;
-			inactiveStarList.RemoveFirst();
-			activeStarList.AddLast(obj);
+		if (starList.Count > 0) {
+			GameObject obj = starList[0];
+			starList.RemoveAt(0);
 			return obj;
 		}
 		return null;
 	}
 
-    public void returnAsteroid(GameObject asteroid) {
-        asteroid.SetActive(false);
-        activeAsteroidList.Remove(asteroid);
-        inactiveAsteroidList.AddLast(asteroid);
-    }
-
 	public void returnStar(GameObject star) {
 		star.SetActive(false);
-		activeStarList.Remove(star);
-		inactiveStarList.AddLast(star);
-//		Debug.Log ("en return");
-//		Debug.Log(string.Format("inactive count: {0}",inactiveStarList.Count));
-//		Debug.Log(string.Format("active count: {0}",activeStarList.Count));
+		starList.Add (star);
 	}
 
     void checkInput() {
         if (Input.GetKey(KeyCode.Return)) {
-//            Debug.Log("Start!");
             startGame();
         }
     }
@@ -221,32 +206,31 @@ public class GameController : MonoBehaviour {
         if (Time.time > nextActionTime) {
             nextActionTime += period;
             GameObject obj = getAsteroid();
-            if (obj != null)
-            {
+            if (obj != null) {
                 obj.SetActive(true);
+  				obj.GetComponent<LargeAsteroid> ().resetAsteroid();
             }
         }
     }
 
 	void spawnStars() {
 		if (Time.time > nextStarActionTime) {
-//			Debug.Log("en spawn if");
 			nextStarActionTime += starPeriod;
-//			Debug.Log(string.Format("inactive count: {0}",inactiveStarList.Count));
 			GameObject obj = getStar();
 			if (obj != null) {
 				obj.SetActive (true);
-//				Debug.Log("activating");
+				obj.GetComponent<Star> ().resetStar ();
 			}
 		}
 	}
 
     void removeAsteroids() {
-        foreach(GameObject obj in activeAsteroidList) {
-            obj.SetActive(false);
-            inactiveAsteroidList.AddLast(obj);
-        }
-        activeAsteroidList = new LinkedList<GameObject>();
+//        foreach(GameObject obj in activeAsteroidList) {
+//            obj.SetActive(false);
+//            inactiveAsteroidList.AddLast(obj);
+//        }
+		// TODO: rever cómo queda el estado del resto de los objetos!
+		largeAsteroidList = new List<GameObject>();
     }
 
    public void playerKilled() {
