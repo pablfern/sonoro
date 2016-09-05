@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour {
     public GameObject largeAsteroidPrefab;
 	public GameObject mediumAsteroidPrefab;
 	public GameObject smallAsteroidPrefab;
+    public GameObject asteroidExplosionPrefab;
 
 	public GameObject starPrefab;
 	public GameObject boltPrefab;
@@ -44,6 +45,8 @@ public class GameController : MonoBehaviour {
 	private List<GameObject> smallAsteroidList;
 	private List<GameObject> starList;
 	private List<GameObject> boltList;
+    private List<GameObject> inactiveExplosions;
+    private List<GameObject> activeExplosions;
 
     // pool de tiros
     // pool de Asteroides
@@ -61,9 +64,38 @@ public class GameController : MonoBehaviour {
 		createBoltPool();
 		createMediumAsteroidPool ();
 		createSmallAsteroidPool ();
+        createExplosionPool();
 	}
 
-	private void createMediumAsteroidPool() {
+    private void createExplosionPool() {
+        inactiveExplosions = new List<GameObject>();
+        activeExplosions = new List<GameObject>();
+        for (int i = 0; i < mediumAsteroidPoolSize; i++) {
+            GameObject obj = (GameObject)Instantiate(asteroidExplosionPrefab);
+            obj.SetActive(false);
+            inactiveExplosions.Add(obj);
+        }
+    }
+
+    public void getAsteroidExplosion(Vector3 position) {
+        if (inactiveExplosions.Count > 0) {
+            GameObject obj = inactiveExplosions[0];
+            obj.transform.position = position;
+            obj.gameObject.GetComponent<ParticleSystem>().time = 0;
+            obj.gameObject.GetComponent<ParticleSystem>().Play();
+            obj.SetActive(true);
+            inactiveExplosions.RemoveAt(0);
+            activeExplosions.Add(obj);
+            //return obj;
+        } else {
+            List<GameObject> aux = inactiveExplosions;
+            inactiveExplosions = activeExplosions;
+            activeExplosions = inactiveExplosions;
+            //return getAsteroidExplosion(position);
+        }
+    }
+
+    private void createMediumAsteroidPool() {
 		mediumAsteroidList = new List<GameObject> ();
 		for (int i = 0 ; i < mediumAsteroidPoolSize ; i++) {
 			GameObject obj = (GameObject)Instantiate(mediumAsteroidPrefab);
