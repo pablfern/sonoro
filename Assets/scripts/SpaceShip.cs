@@ -10,6 +10,7 @@ public class SpaceShip : MonoBehaviour {
 	public float width;
 	public float height;
     public GameObject gameController;
+    public GameObject playerExplosion;
 	private Camera cam;
 
     private Rigidbody2D rb;
@@ -111,6 +112,7 @@ public class SpaceShip : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D collider) {
 		Debug.Log("SpaceShipCollide");
 		collisionAudio.Play ();
+        Instantiate(playerExplosion, transform.position, new Quaternion());
 		gameController.gameObject.GetComponent<GameController>().playerKilled();
 	}
 }
