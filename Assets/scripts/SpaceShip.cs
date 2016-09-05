@@ -119,8 +119,8 @@ public class SpaceShip : MonoBehaviour {
            explosion = (GameObject)Instantiate(playerExplosion, transform.position, new Quaternion());
         } else {
             explosion.transform.position = transform.position;
-            explosion.gameObject.SetActive(false);
-            explosion.gameObject.SetActive(true);
+            explosion.gameObject.GetComponent<ParticleSystem>().time = 0;
+            explosion.gameObject.GetComponent<ParticleSystem>().Play();
         }
 		gameController.gameObject.GetComponent<GameController>().playerKilled();
 	}
