@@ -205,6 +205,7 @@ public class GameController : MonoBehaviour {
     void refreshScoreAndLives() {
         scoreText.GetComponent<UnityEngine.UI.Text>().text = "Score: " + score.ToString();
         livesText.GetComponent<UnityEngine.UI.Text>().text = "Lives: " + lives.ToString();
+        Debug.Log("High Score: " + highScore.ToString());
         highScoreText.GetComponent<UnityEngine.UI.Text>().text = "High Score: " + highScore.ToString();
     }
 
