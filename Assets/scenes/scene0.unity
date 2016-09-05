@@ -508,6 +508,8 @@ MonoBehaviour:
     type: 2}
   smallAsteroidPrefab: {fileID: 1000010862290904, guid: 60e7f2eeae135439dbcb8fc577ce47fe,
     type: 2}
+  asteroidExplosionPrefab: {fileID: 100004, guid: 2857e183f4cd3df4e9096e5b578bd32f,
+    type: 2}
   starPrefab: {fileID: 1000014164025496, guid: e27528f0344884e4386b6413f55c9ec2, type: 2}
   boltPrefab: {fileID: 1000011421036602, guid: b6fde9b1f37dd484e87d650a07584f45, type: 2}
   spaceShip: {fileID: 1070694719}
