@@ -11,6 +11,8 @@ public class SpaceShip : MonoBehaviour {
 	public float height;
     public GameObject gameController;
     public GameObject playerExplosion;
+
+    private GameObject explosion;
 	private Camera cam;
 
     private Rigidbody2D rb;
@@ -21,6 +23,7 @@ public class SpaceShip : MonoBehaviour {
 
 	void Start () {
         //fireSprite.enabled = false;
+        explosion = null;
         this.gameObject.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
 		width = GetComponent<Renderer>().bounds.size.x;
@@ -112,7 +115,13 @@ public class SpaceShip : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D collider) {
 		Debug.Log("SpaceShipCollide");
 		collisionAudio.Play ();
-        Instantiate(playerExplosion, transform.position, new Quaternion());
+        if(explosion == null) {
+           explosion = (GameObject)Instantiate(playerExplosion, transform.position, new Quaternion());
+        } else {
+            explosion.transform.position = transform.position;
+            explosion.gameObject.SetActive(false);
+            explosion.gameObject.SetActive(true);
+        }
 		gameController.gameObject.GetComponent<GameController>().playerKilled();
 	}
 }

@@ -847,6 +847,7 @@ MonoBehaviour:
   width: 16
   height: 16
   gameController: {fileID: 1026908432}
+  playerExplosion: {fileID: 100008, guid: a93496017806b7740910df5fd946f306, type: 2}
   bolt: {fileID: 50000012196124938, guid: b6fde9b1f37dd484e87d650a07584f45, type: 2}
   boltSpeed: 100
   boltAudio: {fileID: 1070694725}
