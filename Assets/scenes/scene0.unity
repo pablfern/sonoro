@@ -526,7 +526,7 @@ MonoBehaviour:
   boltPoolSize: 20
   backgroundMusic: {fileID: 1026908435}
   gameOverMusic: {fileID: 1026908436}
-  period: 1
+  period: 0.5
   starPeriod: 3
 --- !u!4 &1026908434
 Transform:

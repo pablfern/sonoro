@@ -66,7 +66,7 @@ public class Asteroid : MonoBehaviour {
 			collider.gameObject.GetComponent<Bolt> ().returnBolt ();
 			float prevPositionX = gameObject.transform.position.x;
 			float prevPositionY = gameObject.transform.position.y;
-			Debug.Log ("PrevPosX = " + prevPositionX + " - PrevPosY = " + prevPositionY);
+//			Debug.Log ("PrevPosX = " + prevPositionX + " - PrevPosY = " + prevPositionY);
 			if (gameObject.CompareTag("largeAsteroid")) {
 				GameController.instance.getMediumAsteroid (prevPositionX, prevPositionY);
 //				GameController.instance.getMediumAsteroid (prevPositionX, prevPositionY);
