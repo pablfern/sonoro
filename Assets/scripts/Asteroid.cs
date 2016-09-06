@@ -24,6 +24,8 @@ public class Asteroid : MonoBehaviour {
 	}
 
     protected void setInitialMovement() {
+		GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
+		GetComponent<Rigidbody2D> ().angularVelocity = 0.0f;
 		GetComponent<Rigidbody2D>().AddTorque(0.5f, ForceMode2D.Impulse);
         xForce = Random.Range(-4, 4) * (Time.deltaTime + rotationSpeed);
         yForce = Random.Range(-4, 4) * (Time.deltaTime + rotationSpeed);
@@ -64,21 +66,20 @@ public class Asteroid : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D collider) {
 		if (collider.CompareTag("bolt")) {
 			collider.gameObject.GetComponent<Bolt> ().returnBolt ();
-			float prevPositionX = gameObject.transform.position.x;
-			float prevPositionY = gameObject.transform.position.y;
-//			Debug.Log ("PrevPosX = " + prevPositionX + " - PrevPosY = " + prevPositionY);
-			if (gameObject.CompareTag("largeAsteroid")) {
-				GameController.instance.getMediumAsteroid (prevPositionX, prevPositionY);
-//				GameController.instance.getMediumAsteroid (prevPositionX, prevPositionY);
-				GameController.instance.returnAsteroid(gameObject);
-                GameController.instance.addScore(score);
-                GameController.instance.getAsteroidExplosion(transform.position);
-			} else if (gameObject.CompareTag("mediumAsteroid")) {
-				GameController.instance.returnMediumAsteroid(gameObject);
-                GameController.instance.addScore(score);
-                GameController.instance.getAsteroidExplosion(transform.position);
-            }
 		}
+			
+		float prevPositionX = gameObject.transform.position.x;
+		float prevPositionY = gameObject.transform.position.y;
+		if (gameObject.CompareTag("largeAsteroid")) {
+			GameController.instance.getMediumAsteroid (prevPositionX, prevPositionY);
+			GameController.instance.returnAsteroid(gameObject);
+            GameController.instance.addScore(score);
+            GameController.instance.getAsteroidExplosion(transform.position);
+		} else if (gameObject.CompareTag("mediumAsteroid")) {
+			GameController.instance.returnMediumAsteroid(gameObject);
+            GameController.instance.addScore(score);
+            GameController.instance.getAsteroidExplosion(transform.position);
+        }
 
 	}
 }

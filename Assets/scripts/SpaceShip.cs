@@ -13,13 +13,15 @@ public class SpaceShip : MonoBehaviour {
     public GameObject playerExplosion;
 
     private GameObject explosion;
-	private Camera cam;
 
     private Rigidbody2D rb;
 	public Rigidbody2D bolt;
 	public float boltSpeed = 10.0f;
 	public AudioSource boltAudio;
 	public AudioSource collisionAudio;
+	private bool doFlash = false;
+	private bool waiting = false;
+	private float flashWait = 0.125f;
 
 	void Start () {
         //fireSprite.enabled = false;
@@ -28,13 +30,25 @@ public class SpaceShip : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
 		width = GetComponent<Renderer>().bounds.size.x;
 		height = GetComponent<Renderer>().bounds.size.y;
-		cam = GetComponent<Camera>();
 	}
 	
 	void Update () {
         checkInput();
 		checkBoundaries();
 		slowDown ();
+		if (!waiting) {
+			flash ();
+		}
+	}
+
+	public void enableFlash (bool doFlash) {
+		this.doFlash = doFlash;
+	}
+
+	void flash () {
+		if (this.doFlash) {
+			StartCoroutine(FlashWait(flashWait));
+		}
 	}
 
 	void slowDown () {
@@ -55,13 +69,6 @@ public class SpaceShip : MonoBehaviour {
             rb.AddForce(new Vector2(x * (Time.deltaTime + rotationSpeed), y * (Time.deltaTime + rotationSpeed)));
 
         }
-		// XXX: se saca el desplazamiento hacia atrás
-//        if (Input.GetKey(KeyCode.DownArrow)) {
-//            float angle = transform.rotation.eulerAngles.z - 90;
-//            float x = Mathf.Cos(angle * Mathf.Deg2Rad);
-//            float y = Mathf.Sin(angle * Mathf.Deg2Rad);
-//            rb.AddForce(new Vector2(x * (Time.deltaTime + rotationSpeed), y * (Time.deltaTime + rotationSpeed)));
-//        }
 		if (Input.GetKeyDown(KeyCode.Space)) {
 			GameObject bolt = GameController.instance.getBolt ();
 			bolt.transform.position = transform.position;
@@ -105,15 +112,7 @@ public class SpaceShip : MonoBehaviour {
 		}
     }
 
-//    void OnCollisionEnter2D(Collision2D collision) {
-//        Debug.Log("SpaceShipCollide");
-//        gameController.gameObject.GetComponent<GameController>().playerKilled();
-//       
-//
-//    }
-
 	void OnTriggerEnter2D(Collider2D collider) {
-		Debug.Log("SpaceShipCollide");
 		collisionAudio.Play ();
         if(explosion == null) {
            explosion = (GameObject)Instantiate(playerExplosion, transform.position, new Quaternion());
@@ -123,5 +122,14 @@ public class SpaceShip : MonoBehaviour {
             explosion.gameObject.GetComponent<ParticleSystem>().Play();
         }
 		gameController.gameObject.GetComponent<GameController>().playerKilled();
+	}
+
+	IEnumerator FlashWait(float duration) {
+		this.waiting = true;
+		gameObject.GetComponent<SpriteRenderer> ().enabled = false;
+		yield return new WaitForSeconds(duration);
+		gameObject.GetComponent<SpriteRenderer> ().enabled = true;
+		yield return new WaitForSeconds(duration);
+		this.waiting = false;
 	}
 }

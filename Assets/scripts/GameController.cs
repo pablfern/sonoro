@@ -208,11 +208,10 @@ public class GameController : MonoBehaviour {
 
     void startGame() {
         gameStarted = true;
-
         this.lives = 3;
         this.score = 0;
-        this.nextActionTime = 0.0f;
-        this.nextStarActionTime = 0.0f;
+		this.nextActionTime = Time.time;
+		this.nextStarActionTime = Time.time;
         this.period = 3.0f;
         this.starPeriod = 1.0f;
         createAsteroidPool();
@@ -237,7 +236,6 @@ public class GameController : MonoBehaviour {
     void refreshScoreAndLives() {
         scoreText.GetComponent<UnityEngine.UI.Text>().text = "Score: " + score.ToString();
         livesText.GetComponent<UnityEngine.UI.Text>().text = "Lives: " + lives.ToString();
-        Debug.Log("High Score: " + highScore.ToString());
         highScoreText.GetComponent<UnityEngine.UI.Text>().text = "High Score: " + highScore.ToString();
     }
 
@@ -264,12 +262,12 @@ public class GameController : MonoBehaviour {
 	}
 
     void removeAsteroids() {
-//        foreach(GameObject obj in activeAsteroidList) {
-//            obj.SetActive(false);
-//            inactiveAsteroidList.AddLast(obj);
-//        }
-		// TODO: rever cómo queda el estado del resto de los objetos!
-		largeAsteroidList = new List<GameObject>();
+		Destroy (GameObject.FindWithTag("largeAsteroid"));
+		Destroy (GameObject.FindWithTag("mediumAsteroid"));
+		createAsteroidPool ();
+		createMediumAsteroidPool ();
+		this.nextActionTime = Time.time;
+		this.nextStarActionTime = Time.time;
     }
 
    public void playerKilled() {
@@ -279,15 +277,16 @@ public class GameController : MonoBehaviour {
         } else {
             spaceShip.gameObject.GetComponent<SpaceShip>().restartPosition();
             spaceShip.gameObject.SetActive(true);
-            removeAsteroids();
+            removeAsteroids ();
+			StartCoroutine(DestructionWait(5.0f));
         }
     }
 
     void gameOver() {
+		gameStarted = false;
+		removeAsteroids();
         if(score > highScore && score > 0) {
             highScore = score;
-            Debug.Log(highScore);
-            Debug.Log(score);
             highScoreText.GetComponent<UnityEngine.UI.Text>().text = "High score: " + highScore.ToString();
             gameOverText.GetComponent<UnityEngine.UI.Text>().text = "Game Over!\n New high Score!\n" + score.ToString() + "\n Press ENTER to try again";
         } else {
@@ -299,13 +298,12 @@ public class GameController : MonoBehaviour {
         scoreText.gameObject.SetActive(false);
         highScoreText.gameObject.SetActive(false);
         gameOverText.gameObject.SetActive(true);
-        gameStarted = false;
     }
 
-    // Update is called once per frame
     void Update () {
         if (!gameStarted) { 
             checkInput();
+			removeAsteroids();
         } else {
             refreshScoreAndLives();
             spawnAsteroid();
@@ -326,4 +324,12 @@ public class GameController : MonoBehaviour {
     public void addScore(int score) {
         this.score += score;
     }
+
+	IEnumerator DestructionWait(float duration) {
+		spaceShip.gameObject.GetComponent<Collider2D> ().enabled = false;
+		spaceShip.gameObject.GetComponent<SpaceShip> ().enableFlash (true);
+		yield return new WaitForSeconds(duration);
+		spaceShip.gameObject.GetComponent<Collider2D> ().enabled = true;
+		spaceShip.gameObject.GetComponent<SpaceShip> ().enableFlash (false);
+	}
 }
