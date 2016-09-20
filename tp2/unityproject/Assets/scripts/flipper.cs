@@ -4,60 +4,27 @@ using System.Collections;
 public class flipper : MonoBehaviour {
 
 	public int bumperForce;
-	public float maxAngle;
-	public float flipTime;
-	public string key;
-	
-	private Quaternion initialOrientation;
-	private Quaternion finalOrientation;
-	private UnityEngine.KeyCode keyCode;
-	private float t;
+//	private UnityEngine.KeyCode keyCode;
 
 	// Use this for initialization
-	void Start ()
-	{
-		initialOrientation = transform.rotation;
-//		flipTime = 0.20f;
-		if(key=="left"){
-			this.keyCode = KeyCode.LeftArrow;
-			maxAngle = -90.0f;
-			finalOrientation.eulerAngles = new Vector3(initialOrientation.eulerAngles.x, initialOrientation.eulerAngles.y + maxAngle, initialOrientation.eulerAngles.z);
-		} else {
-			this.keyCode = KeyCode.RightArrow;
-			maxAngle = 90.0f;
-			finalOrientation.eulerAngles = new Vector3(initialOrientation.eulerAngles.x, initialOrientation.eulerAngles.y + maxAngle, initialOrientation.eulerAngles.z);
-		}
+	void Start () {
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKey(this.keyCode)){
-			transform.rotation = Quaternion.Slerp(initialOrientation, finalOrientation, t/flipTime);
-			t += Time.deltaTime;
-			if(t > flipTime){
-				t = flipTime;
-			}
-		}
-		else
-		{
-			transform.rotation = Quaternion.Slerp(initialOrientation, finalOrientation, t/flipTime);
-			t -= Time.deltaTime;
-			if(t < 0)
-			{
-				t = 0;
-			}
-		}
+
 	}
 
-	void OnCollisionEnter (Collision c) {
-		// bumper effect to speed up ball
-		GameObject go = c.gameObject;
-		if (go.CompareTag ("Player") && Input.GetKey(this.keyCode)) {
-			Rigidbody rb = go.GetComponent<Rigidbody> ();
-			Debug.Log ("Normal = " + c.contacts[0].normal + " | Velocity = " + rb.velocity.magnitude);
-			rb.AddForce(-c.contacts[0].normal * bumperForce * rb.velocity.magnitude, ForceMode.Impulse);
-		}
-//		Rigidbody rb = gameObject.GetComponent<Rigidbody> ();
-//		rb.AddForce(c.contacts[0].normal * bumperForce * rb.velocity.magnitude, ForceMode.Impulse);
-	}
+//	void OnCollisionEnter (Collision c) {
+//		// bumper effect to speed up ball
+//		GameObject go = c.gameObject;
+//		if (go.CompareTag ("Player") && Input.GetKey(this.keyCode)) {
+//			Rigidbody rb = go.GetComponent<Rigidbody> ();
+//			Debug.Log ("Normal = " + c.contacts[0].normal + " | Velocity = " + rb.velocity.magnitude);
+//			rb.AddForce(-c.contacts[0].normal * bumperForce * rb.velocity.magnitude, ForceMode.Impulse);
+//		}
+////		Rigidbody rb = gameObject.GetComponent<Rigidbody> ();
+////		rb.AddForce(c.contacts[0].normal * bumperForce * rb.velocity.magnitude, ForceMode.Impulse);
+//	}
 }
