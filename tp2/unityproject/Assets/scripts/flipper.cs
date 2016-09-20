@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class flipper : MonoBehaviour {
+
+	public int bumperForce;
 	public float maxAngle;
 	public float flipTime;
 	public string key;
@@ -15,7 +17,7 @@ public class flipper : MonoBehaviour {
 	void Start ()
 	{
 		initialOrientation = transform.rotation;
-		flipTime = 0.20f;
+//		flipTime = 0.20f;
 		if(key=="left"){
 			this.keyCode = KeyCode.LeftArrow;
 			maxAngle = -90.0f;
@@ -45,5 +47,17 @@ public class flipper : MonoBehaviour {
 				t = 0;
 			}
 		}
+	}
+
+	void OnCollisionEnter (Collision c) {
+		// bumper effect to speed up ball
+		GameObject go = c.gameObject;
+		if (go.CompareTag ("Player") && Input.GetKey(this.keyCode)) {
+			Rigidbody rb = go.GetComponent<Rigidbody> ();
+			Debug.Log ("Normal = " + c.contacts[0].normal + " | Velocity = " + rb.velocity.magnitude);
+			rb.AddForce(-c.contacts[0].normal * bumperForce * rb.velocity.magnitude, ForceMode.Impulse);
+		}
+//		Rigidbody rb = gameObject.GetComponent<Rigidbody> ();
+//		rb.AddForce(c.contacts[0].normal * bumperForce * rb.velocity.magnitude, ForceMode.Impulse);
 	}
 }
