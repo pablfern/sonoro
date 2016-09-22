@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class player : MonoBehaviour {
+public class Player : MonoBehaviour {
 
 	public int initialThrust;
 	private bool isPlaying = false;
-	private Vector3 initialPosition = new Vector3 (21, 1, -48);
+	private Vector3 initialPosition = new Vector3 (22.5f, 1.0f, -38.5f);
 
 	// Use this for initialization
 	void Start () {
@@ -23,7 +23,7 @@ public class player : MonoBehaviour {
 
 	}
 
-	void resetPosition () {
+	public void resetPosition () {
 		isPlaying = false;
 		gameObject.transform.position = initialPosition;
 	}
