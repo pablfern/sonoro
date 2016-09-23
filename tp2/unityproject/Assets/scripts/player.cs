@@ -5,8 +5,8 @@ public class Player : MonoBehaviour {
 
 	public int initialThrust;
 	private bool isPlaying = false;
-	private Vector3 initialPosition = new Vector3 (3.5f, 1.0f, -32.5f);
-//	private Vector3 initialPosition = new Vector3 (22.5f, 1.0f, -38.5f);
+//	private Vector3 initialPosition = new Vector3 (3.5f, 1.0f, -32.5f);
+	private Vector3 initialPosition = new Vector3 (22.5f, 1.0f, -38.5f);
 
 	private float launchPower = 0.0f;
 	private float maxLaunchPower = 2.0f;
