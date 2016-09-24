@@ -18,6 +18,8 @@ public class DownWall : MonoBehaviour {
 		GameObject go = c.gameObject;
 		if (go.CompareTag ("Player")) {
 			GameController.instance.resetPlayer ();
-		}
+            AudioSource audio = GetComponent<AudioSource>();
+            audio.Play();
+        }
 	}
 }

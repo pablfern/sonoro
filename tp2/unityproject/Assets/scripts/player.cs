@@ -30,10 +30,6 @@ public class Player : MonoBehaviour {
 				launch ();
 			}
 		}
-
-
-
-
 	}
 
 	public void resetPosition () {

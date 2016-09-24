@@ -15,16 +15,16 @@ public class GameController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         player.SetActive(false);
-        generalText.text = "PRESS START\n TO BEGIN";
+        generalText.text = "PRESS SPACE\nTO BEGIN";
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if (isPlaying) {
             scoreText.text = "SCORE\n" + score.ToString("D8");
-            ballsText.text = "BALLS " + balls.ToString();
+            ballsText.text = "BALLS\n" + balls.ToString();
         } else {
-            if (Input.GetKeyDown(KeyCode.Return)) {
+            if (Input.GetKeyDown(KeyCode.Space)) {
                 AudioSource audio = GetComponent<AudioSource>();
                 audio.Play();
                 this.startGame();
@@ -42,6 +42,10 @@ public class GameController : MonoBehaviour {
         scoreText.gameObject.SetActive(true);
         
         resetPlayer();
+    }
+
+    public bool inGame() {
+        return this.isPlaying;
     }
 
     public void takeLive() {

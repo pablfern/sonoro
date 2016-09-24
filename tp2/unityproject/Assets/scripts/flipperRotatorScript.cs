@@ -25,27 +25,35 @@ public class flipperRotatorScript : MonoBehaviour {
 			finalOrientation.eulerAngles = new Vector3(initialOrientation.eulerAngles.x, initialOrientation.eulerAngles.y + maxAngle, initialOrientation.eulerAngles.z);
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (Input.GetKeyDown(this.keyCode)) {
-            AudioSource audio = GetComponent<AudioSource>();
-            audio.Play();
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (GameController.instance.inGame())
+        {
+            if (Input.GetKeyDown(this.keyCode))
+            {
+                AudioSource audio = GetComponent<AudioSource>();
+                audio.Play();
+            }
+            if (Input.GetKey(this.keyCode))
+            {
+                transform.rotation = Quaternion.Slerp(initialOrientation, finalOrientation, t / flipTime);
+                t += Time.deltaTime;
+                if (t > flipTime)
+                {
+                    t = flipTime;
+                }
+            }
+            else
+            {
+                transform.rotation = Quaternion.Slerp(initialOrientation, finalOrientation, t / flipTime);
+                t -= Time.deltaTime;
+                if (t < 0)
+                {
+                    t = 0;
+                }
+            }
         }
-		if (Input.GetKey(this.keyCode)){
-            transform.rotation = Quaternion.Slerp(initialOrientation, finalOrientation, t/flipTime);
-			t += Time.deltaTime;
-			if(t > flipTime){
-				t = flipTime;
-			}
-		}
-		else {
-			transform.rotation = Quaternion.Slerp(initialOrientation, finalOrientation, t/flipTime);
-			t -= Time.deltaTime;
-			if(t < 0)
-			{
-				t = 0;
-			}
-		}
-	}
+    }
 }
