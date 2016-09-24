@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour {
     public TextMesh ballsText;
     public TextMesh generalText;
     private bool isPlaying = false;
+    private bool isPause = false;
     private int balls = 0;
     private int score = 0;
 
@@ -23,6 +24,16 @@ public class GameController : MonoBehaviour {
         if (isPlaying) {
             scoreText.text = "SCORE\n" + score.ToString("D8");
             ballsText.text = "BALLS\n" + balls.ToString();
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                if (isPause) {
+                    Time.timeScale = 1;
+                    this.isPause = false;
+                } else {
+                    Time.timeScale = 0;
+                    this.isPause = true;
+                }
+                
+            }
         } else {
             if (Input.GetKeyDown(KeyCode.Space)) {
                 AudioSource audio = GetComponent<AudioSource>();
@@ -45,7 +56,7 @@ public class GameController : MonoBehaviour {
     }
 
     public bool inGame() {
-        return this.isPlaying;
+        return this.isPlaying && !this.isPause;
     }
 
     public void takeLive() {
