@@ -28,8 +28,12 @@ public class flipperRotatorScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (Input.GetKeyDown(this.keyCode)) {
+            AudioSource audio = GetComponent<AudioSource>();
+            audio.Play();
+        }
 		if (Input.GetKey(this.keyCode)){
-			transform.rotation = Quaternion.Slerp(initialOrientation, finalOrientation, t/flipTime);
+            transform.rotation = Quaternion.Slerp(initialOrientation, finalOrientation, t/flipTime);
 			t += Time.deltaTime;
 			if(t > flipTime){
 				t = flipTime;

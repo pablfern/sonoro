@@ -14,6 +14,7 @@ public class DownWall : MonoBehaviour {
 	}
 
 	void OnCollisionEnter (Collision c) {
+        GameController.instance.takeLive();
 		GameObject go = c.gameObject;
 		if (go.CompareTag ("Player")) {
 			GameController.instance.resetPlayer ();
