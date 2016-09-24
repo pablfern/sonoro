@@ -25,14 +25,7 @@ public class GameController : MonoBehaviour {
             scoreText.text = "SCORE\n" + score.ToString("D8");
             ballsText.text = "BALLS\n" + balls.ToString();
             if (Input.GetKeyDown(KeyCode.Escape)) {
-                if (isPause) {
-                    Time.timeScale = 1;
-                    this.isPause = false;
-                } else {
-                    Time.timeScale = 0;
-                    this.isPause = true;
-                }
-                
+                pauseUnpause();
             }
         } else {
             if (Input.GetKeyDown(KeyCode.Space)) {
@@ -42,6 +35,23 @@ public class GameController : MonoBehaviour {
             }
         }
 	}
+
+    private void pauseUnpause() {
+        if (isPause) {
+            generalText.gameObject.SetActive(false);
+            scoreText.gameObject.SetActive(true);
+            ballsText.gameObject.SetActive(true);
+            Time.timeScale = 1;
+            this.isPause = false;
+        } else {
+            generalText.text = "PAUSE";
+            generalText.gameObject.SetActive(true);
+            scoreText.gameObject.SetActive(false);
+            ballsText.gameObject.SetActive(false);
+            Time.timeScale = 0;
+            this.isPause = true;
+        }
+    }
 
     private void startGame() {
         player.SetActive(true);
