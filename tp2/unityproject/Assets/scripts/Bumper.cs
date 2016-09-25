@@ -7,7 +7,7 @@ public class Bumper : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		
 	}
 	
 	// Update is called once per frame
@@ -19,6 +19,7 @@ public class Bumper : MonoBehaviour {
 		GameObject go = c.gameObject;
 		if (go.CompareTag ("Player")) {
 			Debug.Log ("Collision with bumper");
+			GameController.instance.addScore (100);
 			Rigidbody rb = go.GetComponent<Rigidbody> ();
 			rb.AddForce(-c.contacts[0].normal * bumperForce * rb.velocity.magnitude, ForceMode.Impulse);
 		}

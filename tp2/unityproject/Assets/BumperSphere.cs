@@ -5,7 +5,7 @@ public class BumperSphere : MonoBehaviour {
 
 	void OnCollisionEnter(Collision col) {
 		if (col.gameObject.tag == "Player") {
-			GameController.addScore (100);
+			GameController.instance.addScore (100);
 		}
 	}
 

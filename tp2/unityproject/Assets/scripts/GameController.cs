@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour {
     private bool isPlaying = false;
     private bool isPause = false;
     private int balls = 0;
-    private int score = 0;
+	private int score = 0;
 
     // Use this for initialization
     void Start () {
@@ -98,8 +98,8 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	public static void addScore(int value) {
-		//score += value;
+	public void addScore(int value) {
+		this.score += value;
 	}
 		
 }
