@@ -35,6 +35,8 @@ public class Player : MonoBehaviour {
 	public void resetPosition () {
 		isPlaying = false;
 		gameObject.transform.position = initialPosition;
+		gameObject.GetComponent<Rigidbody> ().velocity = Vector3.zero;
+
 	}
 
 	void launch () {
