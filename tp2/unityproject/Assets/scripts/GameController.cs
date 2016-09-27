@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        player.SetActive(false);
+        player.SetActive(true);
         generalText.text = "PRESS SPACE\nTO BEGIN";
 	}
 	
