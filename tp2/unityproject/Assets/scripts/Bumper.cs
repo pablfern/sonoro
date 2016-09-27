@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Bumper : MonoBehaviour {
 
-	private int bumperForce = 10;
+	private int bumperForce = 100;
 
 	// Use this for initialization
 	void Start () {
@@ -21,7 +21,7 @@ public class Bumper : MonoBehaviour {
 			Debug.Log ("Collision with bumper");
 			addScore ();
 			Rigidbody rb = go.GetComponent<Rigidbody> ();
-			rb.AddForce(-c.contacts[0].normal * bumperForce * rb.velocity.magnitude, ForceMode.Impulse);
+			rb.AddForce(-c.contacts[0].normal * bumperForce /* * rb.velocity.magnitude */, ForceMode.Impulse);
 		}
 	}
 
