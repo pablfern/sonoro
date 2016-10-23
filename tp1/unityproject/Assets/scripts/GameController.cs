@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour {
 	public GameObject mediumAsteroidPrefab;
 	public GameObject smallAsteroidPrefab;
     public GameObject asteroidExplosionPrefab;
+    public GameObject blueEnemyPrefab;
 
 	public GameObject starPrefab;
 	public GameObject boltPrefab;
@@ -47,6 +48,7 @@ public class GameController : MonoBehaviour {
 	private List<GameObject> boltList;
     private List<GameObject> inactiveExplosions;
     private List<GameObject> activeExplosions;
+    private List<GameObject> blueEnemyList;
 
     // pool de tiros
     // pool de Asteroides
@@ -65,16 +67,28 @@ public class GameController : MonoBehaviour {
 		createMediumAsteroidPool ();
 		createSmallAsteroidPool ();
         createExplosionPool();
+        createBlueEnemyPool();
 	}
+
+    private void createBlueEnemyPool() {
+        blueEnemyList = new List<GameObject>();
+        for(int i = 0; i < 1; i++) {
+            GameObject obj = (GameObject)Instantiate(blueEnemyPrefab);
+            obj.SetActive(false);
+            blueEnemyList.Add(obj);
+        }
+    }
 
     private void createExplosionPool() {
         inactiveExplosions = new List<GameObject>();
         activeExplosions = new List<GameObject>();
+/*
         for (int i = 0; i < mediumAsteroidPoolSize; i++) {
             GameObject obj = (GameObject)Instantiate(asteroidExplosionPrefab);
             obj.SetActive(false);
             inactiveExplosions.Add(obj);
         }
+*/
     }
 
     public void getAsteroidExplosion(Vector3 position) {
@@ -97,20 +111,24 @@ public class GameController : MonoBehaviour {
 
     private void createMediumAsteroidPool() {
 		mediumAsteroidList = new List<GameObject> ();
+        /*
 		for (int i = 0 ; i < mediumAsteroidPoolSize ; i++) {
 			GameObject obj = (GameObject)Instantiate(mediumAsteroidPrefab);
 			obj.SetActive(false);
 			mediumAsteroidList.Add(obj);
 		}
+        */
 	}
 
 	private void createSmallAsteroidPool() {
 		smallAsteroidList = new List<GameObject> ();
+        /*
 		for (int i = 0 ; i < smallAsteroidPoolSize ; i++) {
 			GameObject obj = (GameObject)Instantiate(smallAsteroidPrefab);
 			obj.SetActive(false);
 			smallAsteroidList.Add(obj);
 		}
+        */
 	}
 
 	private void createBoltPool() {
@@ -124,20 +142,24 @@ public class GameController : MonoBehaviour {
 
     public void createAsteroidPool() {
 		largeAsteroidList = new List<GameObject> ();
-		for (int i = 0 ; i < this.asteroidPoolSize ; i++) {
+        /*
+        for (int i = 0 ; i < this.asteroidPoolSize ; i++) {
 			GameObject obj = (GameObject)Instantiate(largeAsteroidPrefab);
 			obj.SetActive(false);
 			largeAsteroidList.Add(obj);
 		}
+        */
     }
 		
 	public void createStarPool() {
 		starList = new List<GameObject>();
-		for (int i = 0 ; i < this.starPoolSize ; i++) {
+        /*
+        for (int i = 0 ; i < this.starPoolSize ; i++) {
 			GameObject obj = (GameObject)Instantiate(starPrefab);
 			obj.SetActive (false);
 			starList.Add(obj);
 		}
+        */
 	}
 
 	public GameObject getMediumAsteroid(float x, float y) {
@@ -194,6 +216,16 @@ public class GameController : MonoBehaviour {
 		}
 		return null;
 	}
+
+    public GameObject getBlueEnemy() {
+        if(blueEnemyList.Count > 0) {
+            GameObject obj = blueEnemyList[0];
+            blueEnemyList.RemoveAt(0);
+            print(obj);
+            return obj;
+        }
+        return null;
+    }
 
 	public void returnStar(GameObject star) {
 		star.SetActive(false);
@@ -261,6 +293,14 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+    void spawnBlueEnemy() {
+        GameObject obj = getBlueEnemy();
+        if(obj != null) {
+            print("Activar!");
+            obj.SetActive(true);
+        }
+    }
+
     void removeAsteroids() {
 		Destroy (GameObject.FindWithTag("largeAsteroid"));
 		Destroy (GameObject.FindWithTag("mediumAsteroid"));
@@ -306,8 +346,9 @@ public class GameController : MonoBehaviour {
 			removeAsteroids();
         } else {
             refreshScoreAndLives();
-            spawnAsteroid();
-			spawnStars();
+            //spawnAsteroid();
+			//spawnStars();
+            spawnBlueEnemy();
         }
     }
 
