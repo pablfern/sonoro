@@ -54,7 +54,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000010071029326}
   - 212: {fileID: 212000012225721210}
-  - 114: {fileID: 114000010260240800}
+  - 114: {fileID: 114000012613950948}
   - 50: {fileID: 50000010929928892}
   - 82: {fileID: 82000013055052152}
   - 82: {fileID: 82000010440662160}
@@ -306,27 +306,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!114 &114000010260240800
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013502444946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70bf39e20a4204f429607bf3cdc94d09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: 5
-  drag: 1
-  width: 16
-  height: 16
-  gameController: {fileID: 0}
-  playerExplosion: {fileID: 100008, guid: a93496017806b7740910df5fd946f306, type: 2}
-  bolt: {fileID: 50000012196124938, guid: b6fde9b1f37dd484e87d650a07584f45, type: 2}
-  boltSpeed: 100
-  boltAudio: {fileID: 82000013055052152}
-  collisionAudio: {fileID: 82000010440662160}
 --- !u!114 &114000010479181084
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -349,6 +328,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5131d41d59534044a97b4e25b1400e93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114000012613950948
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013502444946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a0f10b73e32f6d42ae5936adbed263f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 5
+  drag: 1
+  width: 16
+  height: 16
+  gameController: {fileID: 0}
+  playerExplosion: {fileID: 100008, guid: a93496017806b7740910df5fd946f306, type: 2}
+  bolt: {fileID: 50000012890003746, guid: 7ec1be5ba37d54343937bf7ffe28c6f0, type: 2}
+  boltSpeed: 100
+  boltAudio: {fileID: 0}
+  collisionAudio: {fileID: 0}
 --- !u!212 &212000011611125834
 SpriteRenderer:
   m_ObjectHideFlags: 1

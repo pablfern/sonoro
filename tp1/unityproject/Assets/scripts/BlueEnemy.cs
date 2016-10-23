@@ -22,6 +22,9 @@ public class BlueEnemy : MonoBehaviour {
     private bool waiting = false;
     private float flashWait = 0.125f;
 
+    private float xForce;
+    private float yForce;
+
     void Start()
     {
         //fireSprite.enabled = false;
@@ -32,16 +35,27 @@ public class BlueEnemy : MonoBehaviour {
         height = GetComponent<Renderer>().bounds.size.y;
     }
 
-    void Update()
-    {
-        checkInput();
+    void Update() {
         checkBoundaries();
-        slowDown();
-        if (!waiting)
-        {
-            flash();
-        }
     }
+
+    public void resetBlueEnemy() {
+        setPosition();
+        setInitialMovement();
+    }
+
+    void setPosition() {
+        float screenWidth = Screen.width;
+        float screenHeight = Screen.height;
+        transform.position = new Vector3(Random.Range(-6.0f, 6.0f), Random.Range(5.0f, 6.0f), 0);
+    }
+
+    void setInitialMovement() {
+        GetComponent<Rigidbody2D>().AddTorque(0.5f, ForceMode2D.Impulse);
+        yForce = Random.Range(-4, 0) * (Time.deltaTime + rotationSpeed);
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(0, yForce));
+    }
+
 
     public void enableFlash(bool doFlash)
     {

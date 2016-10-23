@@ -521,8 +521,8 @@ MonoBehaviour:
   livesText: {fileID: 1054036629}
   gameOverText: {fileID: 1637931323}
   asteroidPoolSize: 20
-  mediumAsteroidPoolSize: 40
-  smallAsteroidPoolSize: 80
+  mediumAsteroidPoolSize: 20
+  smallAsteroidPoolSize: 40
   starPoolSize: 50
   boltPoolSize: 20
   backgroundMusic: {fileID: 1026908435}
