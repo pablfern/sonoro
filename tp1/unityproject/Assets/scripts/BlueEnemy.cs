@@ -29,10 +29,10 @@ public class BlueEnemy : MonoBehaviour {
     {
         //fireSprite.enabled = false;
         explosion = null;
-        this.gameObject.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
         width = GetComponent<Renderer>().bounds.size.x;
         height = GetComponent<Renderer>().bounds.size.y;
+        resetBlueEnemy();
     }
 
     void Update() {
@@ -52,7 +52,7 @@ public class BlueEnemy : MonoBehaviour {
 
     void setInitialMovement() {
         GetComponent<Rigidbody2D>().AddTorque(0.5f, ForceMode2D.Impulse);
-        yForce = Random.Range(-4, 0) * (Time.deltaTime + rotationSpeed);
+        yForce = Random.Range(-4, 0) * (Time.deltaTime + rotationSpeed*2);
         GetComponent<Rigidbody2D>().AddForce(new Vector2(0, yForce));
     }
 
@@ -105,8 +105,7 @@ public class BlueEnemy : MonoBehaviour {
     }
 
 
-    public void restartPosition()
-    {
+    public void restartPosition() {
         // TODO: Reset rotation
         rb.velocity = new Vector3(0, 0, 0);
         transform.position = new Vector3(0, 0, 0);

@@ -251,6 +251,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c503f715fae3604692c952dfd594714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &284794449
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4000010071029326, guid: 6107f33c7a6a8f746b625c43292828cc, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010071029326, guid: 6107f33c7a6a8f746b625c43292828cc, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010071029326, guid: 6107f33c7a6a8f746b625c43292828cc, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010071029326, guid: 6107f33c7a6a8f746b625c43292828cc, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010071029326, guid: 6107f33c7a6a8f746b625c43292828cc, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010071029326, guid: 6107f33c7a6a8f746b625c43292828cc, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010071029326, guid: 6107f33c7a6a8f746b625c43292828cc, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010071029326, guid: 6107f33c7a6a8f746b625c43292828cc, type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012613950948, guid: 6107f33c7a6a8f746b625c43292828cc,
+        type: 2}
+      propertyPath: gameController
+      value: 
+      objectReference: {fileID: 1026908432}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 6107f33c7a6a8f746b625c43292828cc, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &337845310
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,7 +595,7 @@ AudioSource:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1026908432}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 9fb3fd0559237490bbf8d135dbbadf68, type: 3}
