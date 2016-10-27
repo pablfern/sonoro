@@ -23,7 +23,9 @@ public class GameController : MonoBehaviour {
     public GameObject scoreText;
     public GameObject highScoreText;
     public GameObject livesText;
+    public GameObject levelText;
     public GameObject gameOverText;
+    public GameObject messageText;
 
     public int asteroidPoolSize;
 	public int mediumAsteroidPoolSize;
@@ -39,6 +41,8 @@ public class GameController : MonoBehaviour {
 	public float starPeriod;
     private bool gameStarted = false;
     private int level;
+    private int asteroidsDestroyed;
+    private bool initLevel;
 
     private List<GameObject> largeAsteroidList;
 	private List<GameObject> mediumAsteroidList;
@@ -88,7 +92,7 @@ public class GameController : MonoBehaviour {
             activeExplosions.Add(obj);
             //return obj;
         } else {
-            List<GameObject> aux = inactiveExplosions;
+            //List<GameObject> aux = inactiveExplosions;
             inactiveExplosions = activeExplosions;
             activeExplosions = inactiveExplosions;
             //return getAsteroidExplosion(position);
@@ -201,6 +205,10 @@ public class GameController : MonoBehaviour {
 		starList.Add (star);
 	}
 
+    public void destroyAsteroid() {
+        this.asteroidsDestroyed = 1 + this.asteroidsDestroyed;
+    }
+
     void checkInput() {
         if (Input.GetKey(KeyCode.Return)) {
             startGame();
@@ -216,6 +224,8 @@ public class GameController : MonoBehaviour {
         this.period = 3.0f;
         this.starPeriod = 1.0f;
         this.level = 1;
+        this.initLevel = true;
+        this.asteroidsDestroyed = 0;
         createAsteroidPool();
         createStarPool();
         createBoltPool();
@@ -227,6 +237,7 @@ public class GameController : MonoBehaviour {
         startText.gameObject.SetActive(false);
         scoreText.gameObject.SetActive(true);
         livesText.gameObject.SetActive(true);
+        levelText.gameObject.SetActive(true);
         spaceShip.gameObject.SetActive(true);
         if(highScore>0) {
             highScoreText.gameObject.SetActive(true);
@@ -235,10 +246,11 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    void refreshScoreAndLives() {
+    void refreshUITexts() {
         scoreText.GetComponent<UnityEngine.UI.Text>().text = "Score: " + score.ToString();
         livesText.GetComponent<UnityEngine.UI.Text>().text = "Lives: " + lives.ToString();
         highScoreText.GetComponent<UnityEngine.UI.Text>().text = "High Score: " + highScore.ToString();
+        levelText.GetComponent<UnityEngine.UI.Text>().text = "Level: " + level;
     }
 
     void spawnAsteroid() {
@@ -307,6 +319,7 @@ public class GameController : MonoBehaviour {
         spaceShip.gameObject.SetActive(false);
         livesText.gameObject.SetActive(false);
         scoreText.gameObject.SetActive(false);
+        levelText.gameObject.SetActive(false);
         highScoreText.gameObject.SetActive(false);
         gameOverText.gameObject.SetActive(true);
     }
@@ -316,7 +329,7 @@ public class GameController : MonoBehaviour {
             checkInput();
 			//removeAsteroids();
         } else {
-            refreshScoreAndLives();
+            refreshUITexts();
             spawnStars();
             switch (level) {
                 case 1:
@@ -333,15 +346,44 @@ public class GameController : MonoBehaviour {
     }
 
     void level1Update() {
-        spawnAsteroid();
+        if (initLevel) {
+            // Diaglogo de la PC
+            // Cambiar musica
+            // Poner cartel del nivel
+            StartCoroutine(ShowMessage("Level " + this.level, 3));
+            initLevel = false;
+        } else {
+            spawnAsteroid();
+            Debug.Log(string.Format("{0} - {1} - {2} - {3}", asteroidPoolSize, mediumAsteroidPoolSize, asteroidPoolSize + mediumAsteroidPoolSize, asteroidsDestroyed));
+            if (asteroidsDestroyed == 30) {
+                level = 2;
+                initLevel = true;
+                // Change music playing
+            }
+        }
+        
     }
 
     void level2Update() {
+        if (initLevel) {
+            StartCoroutine(ShowMessage("Level " + this.level, 3));
+            initLevel = false;
+        } else {
 
+        }
     }
 
     void level3Update() {
 
+    }
+
+    IEnumerator ShowMessage(string message, float delay) {
+        messageText.GetComponent<UnityEngine.UI.Text>().text = message;
+        messageText.GetComponent<UnityEngine.UI.Text>().enabled = true;
+        messageText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(delay);
+        messageText.GetComponent<UnityEngine.UI.Text>().enabled = false;
+        messageText.gameObject.SetActive(false);
     }
 
     void Awake () {

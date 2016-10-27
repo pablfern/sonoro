@@ -10,7 +10,7 @@ public class Asteroid : MonoBehaviour {
 
     private float xForce;
     private float yForce;
-
+    
     protected void Start () {
 		resetAsteroid ();
     }
@@ -65,20 +65,23 @@ public class Asteroid : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D collider) {
 		if (collider.CompareTag("bolt")) {
-			collider.gameObject.GetComponent<Bolt> ().returnBolt ();
+            collider.gameObject.GetComponent<Bolt> ().returnBolt ();
 		}
 			
 		float prevPositionX = gameObject.transform.position.x;
 		float prevPositionY = gameObject.transform.position.y;
 		if (gameObject.CompareTag("largeAsteroid")) {
+            Debug.Log("Colision con asteroide");
 			GameController.instance.getMediumAsteroid (prevPositionX, prevPositionY);
 			GameController.instance.addScore(score);
             GameController.instance.getAsteroidExplosion(transform.position);
             Destroy(gameObject);
+            GameController.instance.destroyAsteroid();
         } else if (gameObject.CompareTag("mediumAsteroid")) {
             GameController.instance.addScore(score);
             GameController.instance.getAsteroidExplosion(transform.position);
             Destroy(gameObject);
+            GameController.instance.destroyAsteroid();
         }
 
 	}

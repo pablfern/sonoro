@@ -50,7 +50,24 @@ public class Star : MonoBehaviour {
 		float minX = maxX * -1;
 		float maxY = verticalSeen / 2;
 		float minY = maxX * -1;
-	}
+
+        if (pos.x < minX - width)
+        {
+            transform.position = new Vector3(maxX, pos.y, pos.z);
+        }
+        if (pos.x > maxX + width)
+        {
+            transform.position = new Vector3(minX, pos.y, pos.z);
+        }
+        if (pos.y < minY - height)
+        {
+            transform.position = new Vector3(pos.x, maxY, pos.z);
+        }
+        if (pos.y > maxY + height)
+        {
+            transform.position = new Vector3(pos.x, minY, pos.z);
+        }
+    }
 
 	void OnBecameInvisible () {
 		Vector3 pos = transform.position;
