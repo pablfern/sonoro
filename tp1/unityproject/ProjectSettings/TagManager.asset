@@ -10,6 +10,7 @@ TagManager:
   - BlueEnemy
   - BlueEnemy Tag
   - EnemyBolt
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - Bolts
   - BlueEnemies
   - EnemyBolts
-  - 
+  - Boss
   - 
   - 
   - 

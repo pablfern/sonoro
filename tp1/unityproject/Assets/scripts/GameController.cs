@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour {
 	public GameObject mediumAsteroidPrefab;
     public GameObject asteroidExplosionPrefab;
     public GameObject blueEnemyPrefab;
+    public GameObject bossPrefab;
 
 	public GameObject starPrefab;
 	public GameObject boltPrefab;
@@ -221,7 +222,7 @@ public class GameController : MonoBehaviour {
 		this.nextStarActionTime = Time.time;
         this.period = 3.0f;
         this.starPeriod = 1.0f;
-        this.level = 2;
+        this.level = 1;
         this.initLevel = true;
         this.asteroidsDestroyed = 0;
         this.blueEnemiesDestroyed = 0;
@@ -283,6 +284,26 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    void spawnBoss() {
+        GameObject obj = (GameObject)Instantiate(bossPrefab);
+        obj.SetActive(true);
+    }
+
+    void removeEnemies() { 
+        if (GameObject.FindGameObjectsWithTag("BlueEnemy").Length > 0) {
+            foreach(GameObject obj in GameObject.FindGameObjectsWithTag("BlueEnemy")) {
+                obj.SetActive(true);
+                Destroy(obj);
+            }
+        }
+        if (GameObject.FindGameObjectsWithTag("Boss").Length > 0) {
+            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Boss")) {
+                obj.SetActive(true);
+                Destroy(obj);
+            }
+        }
+    }
+
     void removeAsteroids() {
 		Destroy (GameObject.FindWithTag("largeAsteroid"));
 		Destroy (GameObject.FindWithTag("mediumAsteroid"));
@@ -304,10 +325,32 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    void winGame() {
+        gameStarted = false;
+        removeAsteroids();
+        removeEnemies();
+        if (score > highScore && score > 0) {
+            highScore = score;
+            highScoreText.GetComponent<UnityEngine.UI.Text>().text = "High score: " + highScore.ToString();
+            gameOverText.GetComponent<UnityEngine.UI.Text>().text = "You win!!\n Press ENTER to play again";
+        } else {
+            gameOverText.GetComponent<UnityEngine.UI.Text>().text = "You win!!\n Press ENTER to play again";
+        }
+
+        gameOverMusic.Play();
+        spaceShip.gameObject.SetActive(false);
+        livesText.gameObject.SetActive(false);
+        scoreText.gameObject.SetActive(false);
+        levelText.gameObject.SetActive(false);
+        highScoreText.gameObject.SetActive(false);
+        gameOverText.gameObject.SetActive(true);
+    }
+
     void gameOver() {
 		gameStarted = false;
 		removeAsteroids();
-        if(score > highScore && score > 0) {
+        removeEnemies();
+        if (score > highScore && score > 0) {
             highScore = score;
             highScoreText.GetComponent<UnityEngine.UI.Text>().text = "High score: " + highScore.ToString();
             gameOverText.GetComponent<UnityEngine.UI.Text>().text = "Game Over!\n New high Score!\n" + score.ToString() + "\n Press ENTER to try again";
@@ -379,9 +422,13 @@ public class GameController : MonoBehaviour {
         if (initLevel) {
             StartCoroutine(ShowMessage("Level " + this.level, 3));
             initLevel = false;
+            spawnBoss();
         } else {
             // Spawn Boss!
             // Check win condition!
+            if (GameObject.FindGameObjectsWithTag("Boss").Length == 0) {
+                winGame();
+            }
         }
     }
 
