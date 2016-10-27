@@ -42,6 +42,7 @@ public class GameController : MonoBehaviour {
     private bool gameStarted = false;
     private int level;
     private int asteroidsDestroyed;
+    private int blueEnemiesDestroyed;
     private bool initLevel;
 
     private List<GameObject> largeAsteroidList;
@@ -61,22 +62,11 @@ public class GameController : MonoBehaviour {
 
     private void createBlueEnemyPool() {
         blueEnemyList = new List<GameObject>();
-        for(int i = 0; i < 1; i++) {
+        for(int i = 0; i < 3; i++) {
             GameObject obj = (GameObject)Instantiate(blueEnemyPrefab);
             obj.SetActive(false);
             blueEnemyList.Add(obj);
         }
-    }
-
-    private void createExplosionPool() {/*
-        inactiveExplosions = new List<GameObject>();
-        activeExplosions = new List<GameObject>();
-
-        for (int i = 0; i < mediumAsteroidPoolSize; i++) {
-            GameObject obj = (GameObject)Instantiate(asteroidExplosionPrefab);
-            obj.SetActive(false);
-            inactiveExplosions.Add(obj);
-        }*/
     }
 
     public void getAsteroidExplosion(Vector3 position) {
@@ -192,7 +182,6 @@ public class GameController : MonoBehaviour {
         if(blueEnemyList.Count > 0) {
             GameObject obj = blueEnemyList[0];
             blueEnemyList.RemoveAt(0);
-            print(obj);
             return obj;
         }
         return null;
@@ -213,6 +202,17 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    void destroyBlueEnemies() {
+        for(int i = 0; i < 4; i++) {
+            GameObject obj = GameObject.FindWithTag("BlueEnemy") as GameObject;
+            if(obj == null) {
+                return;
+            }
+            obj.SetActive(false);
+            Destroy(obj);
+        }
+    }
+
     void startGame() {
         gameStarted = true;
         this.lives = 3;
@@ -221,14 +221,16 @@ public class GameController : MonoBehaviour {
 		this.nextStarActionTime = Time.time;
         this.period = 3.0f;
         this.starPeriod = 1.0f;
-        this.level = 1;
+        this.level = 2;
         this.initLevel = true;
         this.asteroidsDestroyed = 0;
+        this.blueEnemiesDestroyed = 0;
         createAsteroidPool();
+        createBlueEnemyPool();
         createStarPool();
         createBoltPool();
         createMediumAsteroidPool();
-        createExplosionPool();
+        destroyBlueEnemies();
         backgroundMusic.Play();
         spaceShip.gameObject.GetComponent<SpaceShip>().restartPosition();
         gameOverText.gameObject.SetActive(false);
@@ -276,7 +278,6 @@ public class GameController : MonoBehaviour {
     void spawnBlueEnemy() {
         GameObject obj = getBlueEnemy();
         if(obj != null) {
-            print(obj);
             obj.SetActive(true);
             obj.GetComponent<BlueEnemy>().resetBlueEnemy();
         }
@@ -347,7 +348,6 @@ public class GameController : MonoBehaviour {
         if (initLevel) {
             // Diaglogo de la PC
             // Cambiar musica
-            // Poner cartel del nivel
             StartCoroutine(ShowMessage("Level " + this.level, 3));
             initLevel = false;
         } else {
@@ -367,12 +367,22 @@ public class GameController : MonoBehaviour {
             StartCoroutine(ShowMessage("Level " + this.level, 3));
             initLevel = false;
         } else {
-
+            spawnBlueEnemy();
+            if(GameObject.FindGameObjectsWithTag("BlueEnemy").Length == 0) {
+                level = 3;
+                initLevel = true;
+            }
         }
     }
 
     void level3Update() {
-
+        if (initLevel) {
+            StartCoroutine(ShowMessage("Level " + this.level, 3));
+            initLevel = false;
+        } else {
+            // Spawn Boss!
+            // Check win condition!
+        }
     }
 
     IEnumerator ShowMessage(string message, float delay) {

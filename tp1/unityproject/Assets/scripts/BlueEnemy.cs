@@ -8,7 +8,6 @@ public class BlueEnemy : MonoBehaviour {
     public float drag = 2.0f;
     public float width;
     public float height;
-    public GameObject gameController;
     public GameObject playerExplosion;
 
     private GameObject explosion;
@@ -24,11 +23,13 @@ public class BlueEnemy : MonoBehaviour {
 
     private float xForce;
     private float yForce;
+    private int life;
 
     void Start()
     {
         //fireSprite.enabled = false;
         explosion = null;
+        life = 3;
         rb = GetComponent<Rigidbody2D>();
         width = GetComponent<Renderer>().bounds.size.x;
         height = GetComponent<Renderer>().bounds.size.y;
@@ -47,12 +48,13 @@ public class BlueEnemy : MonoBehaviour {
     void setPosition() {
         float screenWidth = Screen.width;
         float screenHeight = Screen.height;
-        transform.position = new Vector3(Random.Range(-6.0f, 6.0f), Random.Range(5.0f, 6.0f), 0);
+        transform.position = new Vector3(Random.Range(-10.0f, 10.0f), Random.Range(5.0f, 6.0f), 0);
     }
 
     void setInitialMovement() {
-        GetComponent<Rigidbody2D>().AddTorque(0.5f, ForceMode2D.Impulse);
-        yForce = Random.Range(-4, 0) * (Time.deltaTime + rotationSpeed*2);
+        float torque = Random.Range(0.1f, 1f);
+        GetComponent<Rigidbody2D>().AddTorque(torque, ForceMode2D.Impulse);
+        yForce = Random.Range(3, 7) * (Time.deltaTime + rotationSpeed*3);
         GetComponent<Rigidbody2D>().AddForce(new Vector2(0, yForce));
     }
 
@@ -70,12 +72,13 @@ public class BlueEnemy : MonoBehaviour {
         }
     }
 
+    /*
     void slowDown()
     {
         Vector2 startVelocity = rb.velocity;
         rb.velocity = Vector2.Lerp(startVelocity, new Vector2(0, 0), Time.deltaTime * drag);
-    }
-
+    }*/
+    /*
     void checkInput()
     {
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -102,7 +105,7 @@ public class BlueEnemy : MonoBehaviour {
             bolt.GetComponent<Bolt>().setCreationTime();
             boltAudio.Play();
         }
-    }
+    }*/
 
 
     public void restartPosition() {
@@ -111,8 +114,7 @@ public class BlueEnemy : MonoBehaviour {
         transform.position = new Vector3(0, 0, 0);
     }
 
-    void checkBoundaries()
-    {
+    void checkBoundaries() {
 
         Vector3 pos = transform.position;
         // es 6 en total, va de -3 a 3
@@ -145,7 +147,24 @@ public class BlueEnemy : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        collisionAudio.Play();
+        Debug.Log("Enemy Collision");
+        if (collider.CompareTag("bolt")) {
+            collider.gameObject.GetComponent<Bolt>().returnBolt();
+        }
+        if (collider.CompareTag("bolt") || collider.CompareTag("Player")) {
+            collisionAudio.Play();
+            life = life - 1;
+            Debug.Log(life);
+            if(life <= 0) {
+                explosion = (GameObject)Instantiate(playerExplosion, transform.position, new Quaternion());
+                explosion.transform.position = transform.position;
+                explosion.gameObject.GetComponent<ParticleSystem>().time = 0;
+                explosion.gameObject.GetComponent<ParticleSystem>().Play();
+                gameObject.SetActive(false);
+            }
+        }
+        
+        /*
         if (explosion == null)
         {
             explosion = (GameObject)Instantiate(playerExplosion, transform.position, new Quaternion());
@@ -156,7 +175,7 @@ public class BlueEnemy : MonoBehaviour {
             explosion.gameObject.GetComponent<ParticleSystem>().time = 0;
             explosion.gameObject.GetComponent<ParticleSystem>().Play();
         }
-        gameController.gameObject.GetComponent<GameController>().playerKilled();
+        */
     }
 
     IEnumerator FlashWait(float duration)

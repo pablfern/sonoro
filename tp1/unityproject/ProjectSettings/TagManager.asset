@@ -7,6 +7,7 @@ TagManager:
   - largeAsteroid
   - mediumAsteroid
   - bolt
+  - BlueEnemy Tag
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Asteroids
   - Spaceship
   - Bolts
-  - 
+  - BlueEnemies
   - 
   - 
   - 
