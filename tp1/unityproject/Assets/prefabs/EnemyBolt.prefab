@@ -23,9 +23,9 @@ GameObject:
   - 212: {fileID: 212000012333388242}
   - 114: {fileID: 114000011049782538}
   - 60: {fileID: 60000011569254248}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: EnemyBolt
-  m_TagString: bolt
+  m_TagString: EnemyBolt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

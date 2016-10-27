@@ -93,7 +93,7 @@ public class SpaceShip : MonoBehaviour {
 		// es 8 en total, va desde -4 a 4
 		float horizontalSeen = verticalSeen * Screen.width / Screen.height;
 
-		float maxX = horizontalSeen / 2;
+        float maxX = horizontalSeen / 2;
 		float minX = maxX * -1;
 		float maxY = verticalSeen / 2;
 		float minY = maxX * -1;

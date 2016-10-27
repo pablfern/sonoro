@@ -8,12 +8,13 @@ public class BlueEnemy : MonoBehaviour {
     public float drag = 2.0f;
     public float width;
     public float height;
-    public GameObject playerExplosion;
 
+    public GameObject playerExplosion;
+    public GameObject enemyBolt;
     private GameObject explosion;
 
     private Rigidbody2D rb;
-    public Rigidbody2D bolt;
+    //public Rigidbody2D bolt;
     public float boltSpeed = 10.0f;
     public AudioSource boltAudio;
     public AudioSource collisionAudio;
@@ -24,12 +25,15 @@ public class BlueEnemy : MonoBehaviour {
     private float xForce;
     private float yForce;
     private int life;
+    private float nextBolt;
+    private float nextBoltTime;
 
-    void Start()
-    {
+    void Start() {
         //fireSprite.enabled = false;
         explosion = null;
         life = 3;
+        nextBolt = Random.Range(0.5f, 1f);
+        nextBoltTime = Time.time + nextBolt;
         rb = GetComponent<Rigidbody2D>();
         width = GetComponent<Renderer>().bounds.size.x;
         height = GetComponent<Renderer>().bounds.size.y;
@@ -38,6 +42,18 @@ public class BlueEnemy : MonoBehaviour {
 
     void Update() {
         checkBoundaries();
+        shoot();
+    }
+
+    public void shoot() {
+        if (Time.time > nextBoltTime) {
+            nextBoltTime = Time.time + nextBolt;
+            GameObject bolt = (GameObject)Instantiate(enemyBolt);
+            bolt.transform.position = transform.position;
+            bolt.transform.rotation = transform.rotation;
+            bolt.GetComponent<Bolt>().setCreationTime();
+            boltAudio.Play();
+        }
     }
 
     public void resetBlueEnemy() {
