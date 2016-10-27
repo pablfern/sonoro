@@ -13,7 +13,6 @@ public class GameController : MonoBehaviour {
 
     public GameObject largeAsteroidPrefab;
 	public GameObject mediumAsteroidPrefab;
-	public GameObject smallAsteroidPrefab;
     public GameObject asteroidExplosionPrefab;
     public GameObject blueEnemyPrefab;
 
@@ -28,7 +27,6 @@ public class GameController : MonoBehaviour {
 
     public int asteroidPoolSize;
 	public int mediumAsteroidPoolSize;
-	public int smallAsteroidPoolSize;
 	public int starPoolSize;
 	public int boltPoolSize;
 
@@ -40,19 +38,15 @@ public class GameController : MonoBehaviour {
     public float period;
 	public float starPeriod;
     private bool gameStarted = false;
+    private int level;
 
     private List<GameObject> largeAsteroidList;
 	private List<GameObject> mediumAsteroidList;
-	private List<GameObject> smallAsteroidList;
 	private List<GameObject> starList;
 	private List<GameObject> boltList;
     private List<GameObject> inactiveExplosions;
     private List<GameObject> activeExplosions;
     private List<GameObject> blueEnemyList;
-
-    // pool de tiros
-    // pool de Asteroides
-
 
     // Use this for initialization
     void Start () {
@@ -60,12 +54,11 @@ public class GameController : MonoBehaviour {
 		this.nextStarActionTime = 0.0f;
         this.period = 3.0f;
 		this.starPeriod = 1.0f;
-      //  this.highScore = 0;
+        this.level = 1;
         createAsteroidPool();
 		createStarPool();
 		createBoltPool();
 		createMediumAsteroidPool ();
-		createSmallAsteroidPool ();
         createExplosionPool();
         createBlueEnemyPool();
 	}
@@ -117,15 +110,6 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	private void createSmallAsteroidPool() {
-		smallAsteroidList = new List<GameObject> ();
-		for (int i = 0 ; i < smallAsteroidPoolSize ; i++) {
-			GameObject obj = (GameObject)Instantiate(smallAsteroidPrefab);
-			obj.SetActive(false);
-			smallAsteroidList.Add(obj);
-		}
-	}
-
 	private void createBoltPool() {
 		boltList = new List<GameObject> ();
 		for (int i = 0 ; i < boltPoolSize ; i++) {
@@ -136,6 +120,7 @@ public class GameController : MonoBehaviour {
 	}
 
     public void createAsteroidPool() {
+        Debug.Log("Creando pool!!");
 		largeAsteroidList = new List<GameObject> ();
         for (int i = 0 ; i < this.asteroidPoolSize ; i++) {
 			GameObject obj = (GameObject)Instantiate(largeAsteroidPrefab);
@@ -237,11 +222,11 @@ public class GameController : MonoBehaviour {
 		this.nextStarActionTime = Time.time;
         this.period = 3.0f;
         this.starPeriod = 1.0f;
+        this.level = 1;
         createAsteroidPool();
         createStarPool();
         createBoltPool();
         createMediumAsteroidPool();
-        createSmallAsteroidPool();
         backgroundMusic.Play();
         spaceShip.gameObject.GetComponent<SpaceShip>().restartPosition();
         gameOverText.gameObject.SetActive(false);
@@ -309,7 +294,7 @@ public class GameController : MonoBehaviour {
         } else {
             spaceShip.gameObject.GetComponent<SpaceShip>().restartPosition();
             spaceShip.gameObject.SetActive(true);
-            removeAsteroids ();
+            //removeAsteroids ();
 			StartCoroutine(DestructionWait(5.0f));
         }
     }
@@ -335,16 +320,37 @@ public class GameController : MonoBehaviour {
     void Update () {
         if (!gameStarted) { 
             checkInput();
-			removeAsteroids();
+			//removeAsteroids();
         } else {
             refreshScoreAndLives();
-            spawnAsteroid();
-			spawnStars();
-            spawnBlueEnemy();
+            spawnStars();
+            switch (level) {
+                case 1:
+                    level1Update();
+                    break;
+                case 2:
+                    level2Update();
+                    break;
+                case 3:
+                    level3Update();
+                    break;
+            }
         }
     }
 
-	void Awake () {
+    void level1Update() {
+        spawnAsteroid();
+    }
+
+    void level2Update() {
+
+    }
+
+    void level3Update() {
+
+    }
+
+    void Awake () {
 		if (instance == null) {
 			instance = this;
 		}

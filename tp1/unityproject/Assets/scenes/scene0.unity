@@ -251,53 +251,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c503f715fae3604692c952dfd594714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &284794449
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4000010071029326, guid: 6107f33c7a6a8f746b625c43292828cc, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010071029326, guid: 6107f33c7a6a8f746b625c43292828cc, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010071029326, guid: 6107f33c7a6a8f746b625c43292828cc, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010071029326, guid: 6107f33c7a6a8f746b625c43292828cc, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010071029326, guid: 6107f33c7a6a8f746b625c43292828cc, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010071029326, guid: 6107f33c7a6a8f746b625c43292828cc, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010071029326, guid: 6107f33c7a6a8f746b625c43292828cc, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010071029326, guid: 6107f33c7a6a8f746b625c43292828cc, type: 2}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000012613950948, guid: 6107f33c7a6a8f746b625c43292828cc,
-        type: 2}
-      propertyPath: gameController
-      value: 
-      objectReference: {fileID: 1026908432}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 6107f33c7a6a8f746b625c43292828cc, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &337845310
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,8 +506,6 @@ MonoBehaviour:
     type: 2}
   mediumAsteroidPrefab: {fileID: 1000011289696814, guid: 305a0ed07dc15434083b1db57c38958c,
     type: 2}
-  smallAsteroidPrefab: {fileID: 1000010862290904, guid: 60e7f2eeae135439dbcb8fc577ce47fe,
-    type: 2}
   asteroidExplosionPrefab: {fileID: 100004, guid: 2857e183f4cd3df4e9096e5b578bd32f,
     type: 2}
   blueEnemyPrefab: {fileID: 1000013502444946, guid: 6107f33c7a6a8f746b625c43292828cc,
@@ -567,11 +518,10 @@ MonoBehaviour:
   highScoreText: {fileID: 1148788339}
   livesText: {fileID: 1054036629}
   gameOverText: {fileID: 1637931323}
-  asteroidPoolSize: 20
-  mediumAsteroidPoolSize: 20
-  smallAsteroidPoolSize: 40
-  starPoolSize: 50
-  boltPoolSize: 20
+  asteroidPoolSize: 2
+  mediumAsteroidPoolSize: 4
+  starPoolSize: 1
+  boltPoolSize: 2
   backgroundMusic: {fileID: 1026908435}
   gameOverMusic: {fileID: 1026908436}
   period: 1
