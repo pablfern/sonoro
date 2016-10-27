@@ -64,7 +64,7 @@ public class BlueEnemy : MonoBehaviour {
     void setPosition() {
         float screenWidth = Screen.width;
         float screenHeight = Screen.height;
-        transform.position = new Vector3(Random.Range(-10.0f, 10.0f), Random.Range(5.0f, 6.0f), 0);
+        transform.position = new Vector3(Random.Range(-6.0f, 6.0f), Random.Range(-2.0f, 2.0f), 0);
     }
 
     void setInitialMovement() {
@@ -130,7 +130,8 @@ public class BlueEnemy : MonoBehaviour {
         transform.position = new Vector3(0, 0, 0);
     }
 
-    void checkBoundaries() {
+    void checkBoundaries()
+    {
 
         Vector3 pos = transform.position;
         // es 6 en total, va de -3 a 3
@@ -138,24 +139,24 @@ public class BlueEnemy : MonoBehaviour {
         // es 8 en total, va desde -4 a 4
         float horizontalSeen = verticalSeen * Screen.width / Screen.height;
 
-        float maxX = horizontalSeen / 2;
-        float minX = maxX * -1;
-        float maxY = verticalSeen / 2;
-        float minY = maxX * -1;
+        float maxX = 6.7f;
+        float minX = -6.7f;
+        float minY = -3.4f;
+        float maxY = 3.4f;
 
-        if (pos.x < minX - width)
+        if (pos.x < minX)
         {
             transform.position = new Vector3(maxX, pos.y, pos.z);
         }
-        if (pos.x > maxX + width)
+        if (pos.x > maxX)
         {
             transform.position = new Vector3(minX, pos.y, pos.z);
         }
-        if (pos.y < minY - height)
+        if (pos.y < minY)
         {
             transform.position = new Vector3(pos.x, maxY, pos.z);
         }
-        if (pos.y > maxY + height)
+        if (pos.y > maxY)
         {
             transform.position = new Vector3(pos.x, minY, pos.z);
         }

@@ -34,30 +34,35 @@ public class Bolt : MonoBehaviour {
 		GameController.instance.returnBolt (gameObject);
 	}
 
-	void checkBoundaries() {
+    void checkBoundaries()
+    {
 
-		Vector3 pos = transform.position;
-		// es 6 en total, va de -3 a 3
-		float verticalSeen    = Camera.main.orthographicSize * 2.0f;
-		// es 8 en total, va desde -4 a 4
-		float horizontalSeen = verticalSeen * Screen.width / Screen.height;
+        Vector3 pos = transform.position;
+        // es 6 en total, va de -3 a 3
+        float verticalSeen = Camera.main.orthographicSize * 2.0f;
+        // es 8 en total, va desde -4 a 4
+        float horizontalSeen = verticalSeen * Screen.width / Screen.height;
 
-		float maxX = horizontalSeen / 2;
-		float minX = maxX * -1;
-		float maxY = verticalSeen / 2;
-		float minY = maxX * -1;
+        float maxX = 6.7f;
+        float minX = -6.7f;
+        float minY = -3.4f;
+        float maxY = 3.4f;
 
-		if (pos.x < minX - width) {
-			transform.position = new Vector3(maxX, pos.y, pos.z);
-		}
-		if (pos.x > maxX + width) {
-			transform.position = new Vector3(minX, pos.y, pos.z);
-		}
-		if (pos.y < minY - height) {
-			transform.position = new Vector3(pos.x, maxY, pos.z);
-		}
-		if (pos.y > maxY + height) {
-			transform.position = new Vector3(pos.x, minY, pos.z);
-		}
-	}
+        if (pos.x < minX)
+        {
+            transform.position = new Vector3(maxX, pos.y, pos.z);
+        }
+        if (pos.x > maxX)
+        {
+            transform.position = new Vector3(minX, pos.y, pos.z);
+        }
+        if (pos.y < minY)
+        {
+            transform.position = new Vector3(pos.x, maxY, pos.z);
+        }
+        if (pos.y > maxY)
+        {
+            transform.position = new Vector3(pos.x, minY, pos.z);
+        }
+    }
 }

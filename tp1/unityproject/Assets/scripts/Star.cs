@@ -36,40 +36,39 @@ public class Star : MonoBehaviour {
 		GetComponent<Rigidbody2D>().AddForce(new Vector2(0, yForce));
 	}
 
-	void checkBoundaries()
-	{
+    void checkBoundaries()
+    {
 
-		Vector3 pos = transform.position;
-		//Debug.Log (string.Format ("pos x y : {0}, {1}", pos.x, pos.y));
-		// es 6 en total, va de -3 a 3
-		float verticalSeen = Camera.main.orthographicSize * 2.0f;
-		// es 8 en total, va desde -4 a 4
-		float horizontalSeen = verticalSeen * Screen.width / Screen.height;
+        Vector3 pos = transform.position;
+        // es 6 en total, va de -3 a 3
+        float verticalSeen = Camera.main.orthographicSize * 2.0f;
+        // es 8 en total, va desde -4 a 4
+        float horizontalSeen = verticalSeen * Screen.width / Screen.height;
 
-		float maxX = horizontalSeen / 2;
-		float minX = maxX * -1;
-		float maxY = verticalSeen / 2;
-		float minY = maxX * -1;
+        float maxX = 6.7f;
+        float minX = -6.7f;
+        float minY = -3.4f;
+        float maxY = 3.4f;
 
-        if (pos.x < minX - width)
+        if (pos.x < minX)
         {
             transform.position = new Vector3(maxX, pos.y, pos.z);
         }
-        if (pos.x > maxX + width)
+        if (pos.x > maxX)
         {
             transform.position = new Vector3(minX, pos.y, pos.z);
         }
-        if (pos.y < minY - height)
+        if (pos.y < minY)
         {
             transform.position = new Vector3(pos.x, maxY, pos.z);
         }
-        if (pos.y > maxY + height)
+        if (pos.y > maxY)
         {
             transform.position = new Vector3(pos.x, minY, pos.z);
         }
     }
 
-	void OnBecameInvisible () {
+    void OnBecameInvisible () {
 		Vector3 pos = transform.position;
 		setPosition ();
 		GameController.instance.returnStar(gameObject);
