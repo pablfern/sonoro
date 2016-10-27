@@ -57,7 +57,7 @@ GameObject:
   - 60: {fileID: 60000012572221988}
   m_Layer: 11
   m_Name: BlueEnemy
-  m_TagString: BlueEnemy Tag
+  m_TagString: BlueEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
