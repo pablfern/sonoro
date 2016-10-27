@@ -518,10 +518,10 @@ MonoBehaviour:
   highScoreText: {fileID: 1148788339}
   livesText: {fileID: 1054036629}
   gameOverText: {fileID: 1637931323}
-  asteroidPoolSize: 2
-  mediumAsteroidPoolSize: 4
+  asteroidPoolSize: 5
+  mediumAsteroidPoolSize: 10
   starPoolSize: 1
-  boltPoolSize: 2
+  boltPoolSize: 50
   backgroundMusic: {fileID: 1026908435}
   gameOverMusic: {fileID: 1026908436}
   period: 1

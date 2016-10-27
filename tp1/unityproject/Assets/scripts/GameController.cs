@@ -55,12 +55,6 @@ public class GameController : MonoBehaviour {
         this.period = 3.0f;
 		this.starPeriod = 1.0f;
         this.level = 1;
-        createAsteroidPool();
-		createStarPool();
-		createBoltPool();
-		createMediumAsteroidPool ();
-        createExplosionPool();
-        createBlueEnemyPool();
 	}
 
     private void createBlueEnemyPool() {
@@ -120,7 +114,6 @@ public class GameController : MonoBehaviour {
 	}
 
     public void createAsteroidPool() {
-        Debug.Log("Creando pool!!");
 		largeAsteroidList = new List<GameObject> ();
         for (int i = 0 ; i < this.asteroidPoolSize ; i++) {
 			GameObject obj = (GameObject)Instantiate(largeAsteroidPrefab);
@@ -227,6 +220,7 @@ public class GameController : MonoBehaviour {
         createStarPool();
         createBoltPool();
         createMediumAsteroidPool();
+        createExplosionPool();
         backgroundMusic.Play();
         spaceShip.gameObject.GetComponent<SpaceShip>().restartPosition();
         gameOverText.gameObject.SetActive(false);

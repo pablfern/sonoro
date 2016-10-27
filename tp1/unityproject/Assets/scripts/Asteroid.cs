@@ -72,13 +72,13 @@ public class Asteroid : MonoBehaviour {
 		float prevPositionY = gameObject.transform.position.y;
 		if (gameObject.CompareTag("largeAsteroid")) {
 			GameController.instance.getMediumAsteroid (prevPositionX, prevPositionY);
-			GameController.instance.returnAsteroid(gameObject);
+			GameController.instance.addScore(score);
+            GameController.instance.getAsteroidExplosion(transform.position);
+            Destroy(gameObject);
+        } else if (gameObject.CompareTag("mediumAsteroid")) {
             GameController.instance.addScore(score);
             GameController.instance.getAsteroidExplosion(transform.position);
-		} else if (gameObject.CompareTag("mediumAsteroid")) {
-			GameController.instance.returnMediumAsteroid(gameObject);
-            GameController.instance.addScore(score);
-            GameController.instance.getAsteroidExplosion(transform.position);
+            Destroy(gameObject);
         }
 
 	}
