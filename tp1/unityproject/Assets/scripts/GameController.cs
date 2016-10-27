@@ -48,8 +48,6 @@ public class GameController : MonoBehaviour {
 	private List<GameObject> mediumAsteroidList;
 	private List<GameObject> starList;
 	private List<GameObject> boltList;
-    private List<GameObject> inactiveExplosions;
-    private List<GameObject> activeExplosions;
     private List<GameObject> blueEnemyList;
 
     // Use this for initialization
@@ -70,7 +68,7 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    private void createExplosionPool() {
+    private void createExplosionPool() {/*
         inactiveExplosions = new List<GameObject>();
         activeExplosions = new List<GameObject>();
 
@@ -78,25 +76,25 @@ public class GameController : MonoBehaviour {
             GameObject obj = (GameObject)Instantiate(asteroidExplosionPrefab);
             obj.SetActive(false);
             inactiveExplosions.Add(obj);
-        }
+        }*/
     }
 
     public void getAsteroidExplosion(Vector3 position) {
-        if (inactiveExplosions.Count > 0) {
-            GameObject obj = inactiveExplosions[0];
-            obj.transform.position = position;
-            obj.gameObject.GetComponent<ParticleSystem>().time = 0;
-            obj.gameObject.GetComponent<ParticleSystem>().Play();
-            obj.SetActive(true);
-            inactiveExplosions.RemoveAt(0);
-            activeExplosions.Add(obj);
-            //return obj;
-        } else {
-            //List<GameObject> aux = inactiveExplosions;
-            inactiveExplosions = activeExplosions;
-            activeExplosions = inactiveExplosions;
-            //return getAsteroidExplosion(position);
-        }
+        GameObject obj = (GameObject)Instantiate(asteroidExplosionPrefab);
+        obj.transform.position = position;
+        obj.gameObject.GetComponent<ParticleSystem>().time = 0;
+        obj.gameObject.GetComponent<ParticleSystem>().Play();
+        obj.SetActive(true);
+        StartCoroutine(DelayedDestroyObject(obj, 5));
+    }
+
+    IEnumerator DelayedDestroyObject(GameObject obj, float seconds) {
+        Debug.Log("Destroying obj...");
+        yield return new WaitForSeconds(seconds);
+        Debug.Log("After destroyed!");
+        obj.SetActive(false);
+        Destroy(obj);
+        
     }
 
     private void createMediumAsteroidPool() {
