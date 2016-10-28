@@ -35,6 +35,7 @@ public class GameController : MonoBehaviour {
     
     public AudioSource startMusic;
 	public AudioSource gameOverMusic;
+    public AudioSource winMusic;
     public AudioSource level1Music;
     public AudioSource level2Music;
     public AudioSource level3Music;
@@ -221,8 +222,10 @@ public class GameController : MonoBehaviour {
     }
 
     void startGame() {
+        winMusic.Stop();
+        gameOverMusic.Stop();
         gameStarted = true;
-        this.lives = 3;
+        this.lives = 0;
         this.score = 0;
 		this.nextActionTime = Time.time;
 		this.nextStarActionTime = Time.time;
@@ -233,6 +236,10 @@ public class GameController : MonoBehaviour {
         this.initLevel = true;
         this.asteroidsDestroyed = 0;
         this.blueEnemiesDestroyed = 0;
+
+        removeAsteroids();
+        removeEnemies();
+
         createAsteroidPool();
         createBlueEnemyPool();
         createStarPool();
@@ -311,12 +318,20 @@ public class GameController : MonoBehaviour {
     }
 
     void removeAsteroids() {
-		Destroy (GameObject.FindWithTag("largeAsteroid"));
-		Destroy (GameObject.FindWithTag("mediumAsteroid"));
-		createAsteroidPool ();
-		createMediumAsteroidPool ();
-		this.nextActionTime = Time.time;
-		this.nextStarActionTime = Time.time;
+        foreach(GameObject obj in GameObject.FindGameObjectsWithTag("largeAsteroid")) {
+            obj.SetActive(true);
+            Destroy(obj);
+        }
+
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("mediumAsteroid")) {
+            obj.SetActive(true);
+            Destroy(obj);
+        }
+
+//		createAsteroidPool ();
+//		createMediumAsteroidPool ();
+//		this.nextActionTime = Time.time;
+//		this.nextStarActionTime = Time.time;
     }
 
    public void playerKilled() {
@@ -332,6 +347,8 @@ public class GameController : MonoBehaviour {
     }
 
     void winGame() {
+        stopLevelMusic();
+        winMusic.Play();
         gameStarted = false;
         removeAsteroids();
         removeEnemies();
@@ -352,10 +369,20 @@ public class GameController : MonoBehaviour {
         gameOverText.gameObject.SetActive(true);
     }
 
+    private void stopLevelMusic() {
+        level1Music.Stop();
+        level2Music.Stop();
+        level3Music.Stop();
+
+        level1Music.volume = 0.0f;
+        level2Music.volume = 0.0f;
+        level3Music.volume = 0.0f;
+    }
+
     void gameOver() {
-		gameStarted = false;
-		removeAsteroids();
-        removeEnemies();
+        stopLevelMusic();
+        gameOverMusic.Play();
+        gameStarted = false;
         if (score > highScore && score > 0) {
             highScore = score;
             highScoreText.GetComponent<UnityEngine.UI.Text>().text = "High score: " + highScore.ToString();
@@ -363,7 +390,6 @@ public class GameController : MonoBehaviour {
         } else {
             gameOverText.GetComponent<UnityEngine.UI.Text>().text = "Game Over!\n Press ENTER to try again";
         }
-		gameOverMusic.Play ();
         spaceShip.gameObject.SetActive(false);
         livesText.gameObject.SetActive(false);
         scoreText.gameObject.SetActive(false);
