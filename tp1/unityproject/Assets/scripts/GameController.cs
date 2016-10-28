@@ -51,6 +51,7 @@ public class GameController : MonoBehaviour {
     private int asteroidsDestroyed;
     private int blueEnemiesDestroyed;
     private bool initLevel;
+    private int levelState;
 
     private List<GameObject> largeAsteroidList;
 	private List<GameObject> mediumAsteroidList;
@@ -228,6 +229,7 @@ public class GameController : MonoBehaviour {
         this.period = 3.0f;
         this.starPeriod = 1.0f;
         this.level = 1;
+        this.levelState = 0;
         this.initLevel = true;
         this.asteroidsDestroyed = 0;
         this.blueEnemiesDestroyed = 0;
@@ -394,22 +396,31 @@ public class GameController : MonoBehaviour {
     void level1Update() {
         fadeOutMusic(startMusic, 0.0f, 0.75f);
         fadeInMusic(level1Music, 0.6f, 0.03f);
-        if (initLevel) {
-            computerVoice1.Play();
-            level1Music.Play();
-            // Diaglogo de la PC
-            // Cambiar musica
-            StartCoroutine(ShowMessage("Level " + this.level, 3));
-            initLevel = false;
-        } else {
-            spawnAsteroid();
-            if (asteroidsDestroyed == 30) {
+        Debug.Log(this.levelState);
+        switch (this.levelState) {
+            case 0:
+                StartCoroutine(ShowMessage("Level " + this.level, 3));
+                computerVoice1.Play();
+                level1Music.Play();
+                StartCoroutine(changeLevelState(2, 8));
+                this.levelState = 1;
+                break;
+            case 1:
+                break;
+            case 2:
+                Debug.Log(string.Format("State: {0}", this.levelState));
+                Debug.Log("Spawning Asteroid");
+                spawnAsteroid();
+                if (asteroidsDestroyed == 30) {
+                    levelState = 3;
+                }
+                break;
+            case 3:
                 level = 2;
+                levelState = 0;
                 initLevel = true;
-                // Change music playing
-            }
-        }
-        
+                break;
+        }        
     }
 
     void level2Update() {
@@ -439,6 +450,12 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    IEnumerator changeLevelState(int state,  float delay) {
+        yield return new WaitForSeconds(delay);
+        Debug.Log(string.Format("Changing level state to: {0}", state));
+        this.levelState = state;
+    }
+
     IEnumerator ShowMessage(string message, float delay) {
         messageText.GetComponent<UnityEngine.UI.Text>().text = message;
         messageText.GetComponent<UnityEngine.UI.Text>().enabled = true;
@@ -465,7 +482,6 @@ public class GameController : MonoBehaviour {
     private void fadeInMusic(AudioSource audio, float maxVolume, float step) {
         if (audio.volume < maxVolume) {
             audio.volume += step * Time.deltaTime;
-            Debug.Log(audio.volume);
         }
     }
 
