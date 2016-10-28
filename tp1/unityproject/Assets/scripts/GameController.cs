@@ -51,8 +51,8 @@ public class GameController : MonoBehaviour {
     private int level;
     private int asteroidsDestroyed;
     private int blueEnemiesDestroyed;
-    private bool initLevel;
     private int levelState;
+    private bool bossIsSpawn;
 
     private List<GameObject> largeAsteroidList;
 	private List<GameObject> mediumAsteroidList;
@@ -62,7 +62,7 @@ public class GameController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-       // startMusic.Play();
+        startText.GetComponent<UnityEngine.UI.Text>().text = "ASTEROIDS\n\nPRESS ENTER TO START";
         this.nextActionTime = 0.0f;
 		this.nextStarActionTime = 0.0f;
         this.period = 3.0f;
@@ -225,7 +225,7 @@ public class GameController : MonoBehaviour {
         winMusic.Stop();
         gameOverMusic.Stop();
         gameStarted = true;
-        this.lives = 0;
+        this.lives = 2;
         this.score = 0;
 		this.nextActionTime = Time.time;
 		this.nextStarActionTime = Time.time;
@@ -233,12 +233,12 @@ public class GameController : MonoBehaviour {
         this.starPeriod = 1.0f;
         this.level = 1;
         this.levelState = 0;
-        this.initLevel = true;
         this.asteroidsDestroyed = 0;
         this.blueEnemiesDestroyed = 0;
 
         removeAsteroids();
         removeEnemies();
+        removeBolts();
 
         createAsteroidPool();
         createBlueEnemyPool();
@@ -334,7 +334,20 @@ public class GameController : MonoBehaviour {
 //		this.nextStarActionTime = Time.time;
     }
 
-   public void playerKilled() {
+    void removeBolts() {
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("bolt")) {
+            obj.SetActive(true);
+            Destroy(obj);
+        }
+
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("EnemyBolt")) {
+            obj.SetActive(true);
+            Destroy(obj);
+        }
+
+    }
+
+    public void playerKilled() {
         lives -= 1;
         if(lives < 0) {
             gameOver();
@@ -422,7 +435,6 @@ public class GameController : MonoBehaviour {
     void level1Update() {
         fadeOutMusic(startMusic, 0.0f, 0.75f);
         fadeInMusic(level1Music, 0.6f, 0.03f);
-        Debug.Log(this.levelState);
         switch (this.levelState) {
             case 0:
                 StartCoroutine(ShowMessage("Level " + this.level, 3));
@@ -434,8 +446,6 @@ public class GameController : MonoBehaviour {
             case 1:
                 break;
             case 2:
-                Debug.Log(string.Format("State: {0}", this.levelState));
-                Debug.Log("Spawning Asteroid");
                 spawnAsteroid();
                 if (asteroidsDestroyed == 30) {
                     levelState = 3;
@@ -444,35 +454,61 @@ public class GameController : MonoBehaviour {
             case 3:
                 level = 2;
                 levelState = 0;
-                initLevel = true;
                 break;
         }        
     }
 
     void level2Update() {
-        if (initLevel) {
-            StartCoroutine(ShowMessage("Level " + this.level, 3));
-            initLevel = false;
-        } else {
-            spawnBlueEnemy();
-            if(GameObject.FindGameObjectsWithTag("BlueEnemy").Length == 0) {
+        fadeOutMusic(level1Music, 0.0f, 0.75f);
+        fadeInMusic(level2Music, 0.6f, 0.03f);
+        switch (this.levelState) {
+            case 0:
+                StartCoroutine(ShowMessage("Level " + this.level, 3));
+                computerVoice2.Play();
+                level2Music.Play();
+                StartCoroutine(changeLevelState(2, 8));
+                this.levelState = 1;
+                break;
+            case 1:
+                break;
+            case 2:
+                spawnBlueEnemy();
+                if (GameObject.FindGameObjectsWithTag("BlueEnemy").Length == 0) {
+                    levelState = 3;
+                }
+                break;
+            case 3:
                 level = 3;
-                initLevel = true;
-            }
+                levelState = 0;
+                break;
         }
     }
 
     void level3Update() {
-        if (initLevel) {
-            StartCoroutine(ShowMessage("Level " + this.level, 3));
-            initLevel = false;
-            spawnBoss();
-        } else {
-            // Spawn Boss!
-            // Check win condition!
-            if (GameObject.FindGameObjectsWithTag("Boss").Length == 0) {
-                winGame();
-            }
+        fadeOutMusic(level2Music, 0.0f, 0.75f);
+        fadeInMusic(level3Music, 0.6f, 0.03f);
+        switch (this.levelState)
+        {
+            case 0:
+                StartCoroutine(ShowMessage("Level " + this.level, 3));
+                computerVoice3.Play();
+                level3Music.Play();
+                StartCoroutine(changeLevelState(2, 4));
+                this.levelState = 1;
+                this.bossIsSpawn = false;
+                break;
+            case 1:
+                break;
+            case 2:
+                if (!bossIsSpawn) {
+                    spawnBoss();
+                    this.bossIsSpawn = true;
+                }
+
+                if (GameObject.FindGameObjectsWithTag("Boss").Length == 0) {
+                    winGame();
+                }
+                break;
         }
     }
 
