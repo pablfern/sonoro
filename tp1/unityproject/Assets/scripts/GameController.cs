@@ -32,10 +32,16 @@ public class GameController : MonoBehaviour {
 	public int mediumAsteroidPoolSize;
 	public int starPoolSize;
 	public int boltPoolSize;
-
-	public AudioSource backgroundMusic;
-	public AudioSource gameOverMusic;
     
+    public AudioSource startMusic;
+	public AudioSource gameOverMusic;
+    public AudioSource level1Music;
+    public AudioSource level2Music;
+    public AudioSource level3Music;
+    public AudioSource computerVoice1;
+    public AudioSource computerVoice2;
+    public AudioSource computerVoice3;
+
     private float nextActionTime;
 	private float nextStarActionTime;
     public float period;
@@ -54,6 +60,7 @@ public class GameController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+       // startMusic.Play();
         this.nextActionTime = 0.0f;
 		this.nextStarActionTime = 0.0f;
         this.period = 3.0f;
@@ -230,7 +237,6 @@ public class GameController : MonoBehaviour {
         createBoltPool();
         createMediumAsteroidPool();
         destroyBlueEnemies();
-        backgroundMusic.Play();
         spaceShip.gameObject.GetComponent<SpaceShip>().restartPosition();
         gameOverText.gameObject.SetActive(false);
         startText.gameObject.SetActive(false);
@@ -386,7 +392,11 @@ public class GameController : MonoBehaviour {
     }
 
     void level1Update() {
+        fadeOutMusic(startMusic, 0.0f, 0.75f);
+        fadeInMusic(level1Music, 0.6f, 0.03f);
         if (initLevel) {
+            computerVoice1.Play();
+            level1Music.Play();
             // Diaglogo de la PC
             // Cambiar musica
             StartCoroutine(ShowMessage("Level " + this.level, 3));
@@ -451,6 +461,20 @@ public class GameController : MonoBehaviour {
     public void addScore(int score) {
         this.score += score;
     }
+
+    private void fadeInMusic(AudioSource audio, float maxVolume, float step) {
+        if (audio.volume < maxVolume) {
+            audio.volume += step * Time.deltaTime;
+            Debug.Log(audio.volume);
+        }
+    }
+
+    private void fadeOutMusic(AudioSource audio, float minVolume, float step) {
+        if (audio.volume > minVolume) {
+            audio.volume -= step * Time.deltaTime;
+        }
+    }
+
 
 	IEnumerator DestructionWait(float duration) {
 		spaceShip.gameObject.GetComponent<Collider2D> ().enabled = false;
