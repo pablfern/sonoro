@@ -94,10 +94,10 @@ public class SpaceShip : MonoBehaviour {
 		// es 8 en total, va desde -4 a 4
 		float horizontalSeen = verticalSeen * Screen.width / Screen.height;
 
-        float maxX = 6.7f;
-		float minX = -6.7f;
-		float minY = -3.4f;
-        float maxY = 3.4f;
+        float maxX = 6.6f;
+		float minX = -6.6f;
+		float minY = -3.3f;
+        float maxY = 3.3f;
 
         if (pos.x < minX) {
 			transform.position = new Vector3(maxX, pos.y, pos.z);
