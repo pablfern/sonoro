@@ -249,21 +249,21 @@ public class GameController : MonoBehaviour {
         spaceShip.gameObject.GetComponent<SpaceShip>().restartPosition();
         gameOverText.gameObject.SetActive(false);
         startText.gameObject.SetActive(false);
-        scoreText.gameObject.SetActive(true);
+        //scoreText.gameObject.SetActive(true);
         livesText.gameObject.SetActive(true);
         levelText.gameObject.SetActive(true);
         spaceShip.gameObject.SetActive(true);
         if(highScore>0) {
-            highScoreText.gameObject.SetActive(true);
+            //highScoreText.gameObject.SetActive(true);
         } else {
-            highScoreText.gameObject.SetActive(false);
+            //highScoreText.gameObject.SetActive(false);
         }
     }
 
     void refreshUITexts() {
-        scoreText.GetComponent<UnityEngine.UI.Text>().text = "Score: " + score.ToString();
+        //scoreText.GetComponent<UnityEngine.UI.Text>().text = "Score: " + score.ToString();
         livesText.GetComponent<UnityEngine.UI.Text>().text = "Lives: " + lives.ToString();
-        highScoreText.GetComponent<UnityEngine.UI.Text>().text = "High Score: " + highScore.ToString();
+        //highScoreText.GetComponent<UnityEngine.UI.Text>().text = "High Score: " + highScore.ToString();
         levelText.GetComponent<UnityEngine.UI.Text>().text = "Level: " + level;
     }
 
@@ -367,7 +367,7 @@ public class GameController : MonoBehaviour {
         removeEnemies();
         if (score > highScore && score > 0) {
             highScore = score;
-            highScoreText.GetComponent<UnityEngine.UI.Text>().text = "High score: " + highScore.ToString();
+            //highScoreText.GetComponent<UnityEngine.UI.Text>().text = "High score: " + highScore.ToString();
             gameOverText.GetComponent<UnityEngine.UI.Text>().text = "You win!!\n Press ENTER to play again";
         } else {
             gameOverText.GetComponent<UnityEngine.UI.Text>().text = "You win!!\n Press ENTER to play again";
@@ -376,9 +376,9 @@ public class GameController : MonoBehaviour {
         gameOverMusic.Play();
         spaceShip.gameObject.SetActive(false);
         livesText.gameObject.SetActive(false);
-        scoreText.gameObject.SetActive(false);
+        //scoreText.gameObject.SetActive(false);
         levelText.gameObject.SetActive(false);
-        highScoreText.gameObject.SetActive(false);
+        //highScoreText.gameObject.SetActive(false);
         gameOverText.gameObject.SetActive(true);
     }
 
@@ -398,16 +398,16 @@ public class GameController : MonoBehaviour {
         gameStarted = false;
         if (score > highScore && score > 0) {
             highScore = score;
-            highScoreText.GetComponent<UnityEngine.UI.Text>().text = "High score: " + highScore.ToString();
-            gameOverText.GetComponent<UnityEngine.UI.Text>().text = "Game Over!\n New high Score!\n" + score.ToString() + "\n Press ENTER to try again";
+            //highScoreText.GetComponent<UnityEngine.UI.Text>().text = "High score: " + highScore.ToString();
+            gameOverText.GetComponent<UnityEngine.UI.Text>().text = "Game Over!\n Press ENTER to try again";
         } else {
             gameOverText.GetComponent<UnityEngine.UI.Text>().text = "Game Over!\n Press ENTER to try again";
         }
         spaceShip.gameObject.SetActive(false);
         livesText.gameObject.SetActive(false);
-        scoreText.gameObject.SetActive(false);
+        //scoreText.gameObject.SetActive(false);
         levelText.gameObject.SetActive(false);
-        highScoreText.gameObject.SetActive(false);
+        //highScoreText.gameObject.SetActive(false);
         gameOverText.gameObject.SetActive(true);
     }
 
@@ -417,7 +417,7 @@ public class GameController : MonoBehaviour {
 			//removeAsteroids();
         } else {
             refreshUITexts();
-            spawnStars();
+            //spawnStars();
             switch (level) {
                 case 1:
                     level1Update();
@@ -466,7 +466,7 @@ public class GameController : MonoBehaviour {
                 StartCoroutine(ShowMessage("Level " + this.level, 3));
                 computerVoice2.Play();
                 level2Music.Play();
-                StartCoroutine(changeLevelState(2, 8));
+                StartCoroutine(changeLevelState(2, 6));
                 this.levelState = 1;
                 break;
             case 1:
@@ -514,7 +514,6 @@ public class GameController : MonoBehaviour {
 
     IEnumerator changeLevelState(int state,  float delay) {
         yield return new WaitForSeconds(delay);
-        Debug.Log(string.Format("Changing level state to: {0}", state));
         this.levelState = state;
     }
 

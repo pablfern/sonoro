@@ -22,7 +22,7 @@ GameObject:
   - 212: {fileID: 212000012220134806}
   - 114: {fileID: 114000012070669976}
   - 50: {fileID: 50000010305506810}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: StarPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}

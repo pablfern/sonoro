@@ -73,7 +73,7 @@ public class SpaceShip : MonoBehaviour {
 			GameObject bolt = GameController.instance.getBolt ();
 			bolt.transform.position = transform.position;
 			bolt.transform.rotation = transform.rotation;
-			bolt.GetComponent<Bolt> ().setCreationTime ();
+            bolt.GetComponent<Bolt> ().setCreationTime ();
 			boltAudio.Play ();
 		}
     }

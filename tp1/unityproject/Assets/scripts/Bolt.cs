@@ -14,6 +14,10 @@ public class Bolt : MonoBehaviour {
 		height = GetComponent<Renderer>().bounds.size.y;
 	}
 
+    public void setBoltTTL(float ttl) {
+        this.ttl = ttl;
+    }
+
 	void Update () {
 		float angle = transform.rotation.eulerAngles.z + 90;
 		float x = Mathf.Cos(angle * Mathf.Deg2Rad);
