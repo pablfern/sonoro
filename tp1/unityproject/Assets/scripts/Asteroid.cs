@@ -10,8 +10,11 @@ public class Asteroid : MonoBehaviour {
 
     private float xForce;
     private float yForce;
-    
+    private float nextMovementChange;
+    private float timeDelta;
     protected void Start () {
+        timeDelta = 10f;
+        nextMovementChange = Time.time + timeDelta;
 		resetAsteroid ();
     }
 
@@ -34,6 +37,13 @@ public class Asteroid : MonoBehaviour {
 
     void Update () {
         checkBoundaries();
+        if(Time.time > nextMovementChange) {
+            Debug.Log("Change asteroid route");
+            nextMovementChange = Time.time + timeDelta;
+            xForce = Random.Range(0.0f, 1.0f) < 0.5f? Random.Range(-2.0f, -1.0f): Random.Range(1.0f, 2.0f);
+            yForce = Random.Range(0.0f, 1.0f) < 0.5f ? Random.Range(-2.0f, -1.0f) : Random.Range(1.0f, 2.0f);
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(xForce, yForce));
+        }
 	}
 
     void checkBoundaries()

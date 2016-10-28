@@ -80,9 +80,7 @@ public class GameController : MonoBehaviour {
     }
 
     IEnumerator DelayedDestroyObject(GameObject obj, float seconds) {
-        Debug.Log("Destroying obj...");
         yield return new WaitForSeconds(seconds);
-        Debug.Log("After destroyed!");
         obj.SetActive(false);
         Destroy(obj);
         
@@ -395,7 +393,6 @@ public class GameController : MonoBehaviour {
             initLevel = false;
         } else {
             spawnAsteroid();
-            Debug.Log(string.Format("{0} - {1} - {2} - {3}", asteroidPoolSize, mediumAsteroidPoolSize, asteroidPoolSize + mediumAsteroidPoolSize, asteroidsDestroyed));
             if (asteroidsDestroyed == 30) {
                 level = 2;
                 initLevel = true;

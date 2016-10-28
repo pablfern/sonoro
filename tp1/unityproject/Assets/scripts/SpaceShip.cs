@@ -33,7 +33,6 @@ public class SpaceShip : MonoBehaviour {
 	}
 	
 	void Update () {
-        Debug.Log(String.Format("{0} {1}",transform.position.x, transform.position.y));
         checkInput();
 		checkBoundaries();
 		slowDown ();
