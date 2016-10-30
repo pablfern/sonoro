@@ -53,6 +53,7 @@ public class GameController : MonoBehaviour {
     public float period;
 	public float starPeriod;
     private bool gameStarted = false;
+    private bool gameIsOver = false;
     private int level;
     private int asteroidsDestroyed;
     private int blueEnemiesDestroyed;
@@ -221,11 +222,30 @@ public class GameController : MonoBehaviour {
             menuOption = menuOption - 1 == 0 ? 2 : 1;
             changeMenuSelected();
             selectSound.Play();
-        } else if (Input.GetKey(KeyCode.Return)) {
-            if(menuOption == 1) {
-                startGame();
+        } else if (Input.GetKeyDown(KeyCode.Return)) {
+            if (gameIsOver) {
+                gameOverMusic.Stop();
+                winMusic.Stop();
+                startMusic.volume = 1.0f;
+                startMusic.Play();
+                gameOverText.gameObject.SetActive(false);
+                startText.gameObject.SetActive(true);
+                startGameText.gameObject.SetActive(true);
+                quitGameText.gameObject.SetActive(true);
+                startGameArrowText.gameObject.SetActive(true);
+                quitGameArrowText.gameObject.SetActive(true);
+                menuOption = 1;
+                changeMenuSelected();
+                gameIsOver = false;
+                removeAsteroids();
+                removeEnemies();
+                removeBolts();
             } else {
-                quitGame();
+                if (menuOption == 1) {
+                    startGame();
+                } else {
+                    quitGame();
+                }
             }
             
         }
@@ -256,10 +276,11 @@ public class GameController : MonoBehaviour {
     }
 
     void startGame() {
+        gameIsOver = false;
         winMusic.Stop();
         gameOverMusic.Stop();
         gameStarted = true;
-        this.lives = 2;
+        this.lives = 50;
         this.score = 0;
 		this.nextActionTime = Time.time;
 		this.nextStarActionTime = Time.time;
@@ -401,17 +422,19 @@ public class GameController : MonoBehaviour {
         stopLevelMusic();
         winMusic.Play();
         gameStarted = false;
+        gameIsOver = true;
         removeAsteroids();
         removeEnemies();
+        removeBolts();
         if (score > highScore && score > 0) {
             highScore = score;
             //highScoreText.GetComponent<UnityEngine.UI.Text>().text = "High score: " + highScore.ToString();
-            gameOverText.GetComponent<UnityEngine.UI.Text>().text = "You win!!\n Press ENTER to play again";
+            gameOverText.GetComponent<UnityEngine.UI.Text>().text = "You win!!\n Press ENTER to return to main menu";
         } else {
-            gameOverText.GetComponent<UnityEngine.UI.Text>().text = "You win!!\n Press ENTER to play again";
+            gameOverText.GetComponent<UnityEngine.UI.Text>().text = "You win!!\n Press ENTER to return to main menu";
         }
 
-        gameOverMusic.Play();
+        //gameOverMusic.Play();
         spaceShip.gameObject.SetActive(false);
         livesText.gameObject.SetActive(false);
         //scoreText.gameObject.SetActive(false);
@@ -431,15 +454,16 @@ public class GameController : MonoBehaviour {
     }
 
     void gameOver() {
+        gameIsOver = true;
         stopLevelMusic();
         gameOverMusic.Play();
         gameStarted = false;
         if (score > highScore && score > 0) {
             highScore = score;
             //highScoreText.GetComponent<UnityEngine.UI.Text>().text = "High score: " + highScore.ToString();
-            gameOverText.GetComponent<UnityEngine.UI.Text>().text = "Game Over!\n Press ENTER to try again";
+            gameOverText.GetComponent<UnityEngine.UI.Text>().text = "Game Over!\n Press ENTER to return to main menu";
         } else {
-            gameOverText.GetComponent<UnityEngine.UI.Text>().text = "Game Over!\n Press ENTER to try again";
+            gameOverText.GetComponent<UnityEngine.UI.Text>().text = "Game Over!\n Press ENTER to return to main menu";
         }
         spaceShip.gameObject.SetActive(false);
         livesText.gameObject.SetActive(false);
