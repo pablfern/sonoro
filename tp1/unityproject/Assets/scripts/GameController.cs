@@ -23,6 +23,10 @@ public class GameController : MonoBehaviour {
     public GameObject startText;
     public GameObject scoreText;
     public GameObject highScoreText;
+    public GameObject startGameText;
+    public GameObject startGameArrowText;
+    public GameObject quitGameText;
+    public GameObject quitGameArrowText;
     public GameObject livesText;
     public GameObject levelText;
     public GameObject gameOverText;
@@ -42,6 +46,7 @@ public class GameController : MonoBehaviour {
     public AudioSource computerVoice1;
     public AudioSource computerVoice2;
     public AudioSource computerVoice3;
+    public AudioSource selectSound;
 
     private float nextActionTime;
 	private float nextStarActionTime;
@@ -59,11 +64,13 @@ public class GameController : MonoBehaviour {
 	private List<GameObject> starList;
 	private List<GameObject> boltList;
     private List<GameObject> blueEnemyList;
+    private int menuOption;
 
     // Use this for initialization
     void Start () {
+        menuOption = 1;
         startMusic.Play();
-        startText.GetComponent<UnityEngine.UI.Text>().text = "ASTEROIDS\n\nPRESS ENTER TO START";
+        startText.GetComponent<UnityEngine.UI.Text>().text = "ASTEROIDS";
         this.nextActionTime = 0.0f;
 		this.nextStarActionTime = 0.0f;
         this.period = 3.0f;
@@ -206,9 +213,35 @@ public class GameController : MonoBehaviour {
     }
 
     void checkInput() {
-        if (Input.GetKey(KeyCode.Return)) {
-            startGame();
+        if (Input.GetKeyDown(KeyCode.DownArrow)) {
+            menuOption = menuOption + 1 == 2 ? 2 : 1;
+            changeMenuSelected();
+            selectSound.Play();
+        } else if (Input.GetKeyDown(KeyCode.UpArrow)) {
+            menuOption = menuOption - 1 == 0 ? 2 : 1;
+            changeMenuSelected();
+            selectSound.Play();
+        } else if (Input.GetKey(KeyCode.Return)) {
+            if(menuOption == 1) {
+                startGame();
+            } else {
+                quitGame();
+            }
+            
         }
+    }
+
+    private void changeMenuSelected() {
+        if(menuOption == 1) {
+            startGameArrowText.GetComponent<UnityEngine.UI.Text>().text = "->";
+            quitGameArrowText.GetComponent<UnityEngine.UI.Text>().text = "";
+        } else if (menuOption == 2) {
+            startGameArrowText.GetComponent<UnityEngine.UI.Text>().text = "";
+            quitGameArrowText.GetComponent<UnityEngine.UI.Text>().text = "->";
+        }
+    }
+    private void quitGame() {
+        Application.Quit();
     }
 
     void destroyBlueEnemies() {
@@ -250,6 +283,10 @@ public class GameController : MonoBehaviour {
         spaceShip.gameObject.GetComponent<SpaceShip>().restartPosition();
         gameOverText.gameObject.SetActive(false);
         startText.gameObject.SetActive(false);
+        startGameText.gameObject.SetActive(false);
+        quitGameText.gameObject.SetActive(false);
+        startGameArrowText.gameObject.SetActive(false);
+        quitGameArrowText.gameObject.SetActive(false);
         //scoreText.gameObject.SetActive(true);
         livesText.gameObject.SetActive(true);
         levelText.gameObject.SetActive(true);
