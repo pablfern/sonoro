@@ -62,6 +62,7 @@ public class GameController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        startMusic.Play();
         startText.GetComponent<UnityEngine.UI.Text>().text = "ASTEROIDS\n\nPRESS ENTER TO START";
         this.nextActionTime = 0.0f;
 		this.nextStarActionTime = 0.0f;
