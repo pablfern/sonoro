@@ -35,7 +35,9 @@ public class Bolt : MonoBehaviour {
 	}
 
 	public void returnBolt() {
-		GameController.instance.returnBolt (gameObject);
+        gameObject.SetActive(true);
+        Destroy(gameObject);
+//		GameController.instance.returnBolt (gameObject);
 	}
 
     void checkBoundaries()

@@ -158,18 +158,14 @@ public class GameController : MonoBehaviour {
 	}
 
 	public GameObject getBolt() {
-		if (boltList.Count > 0) {
-			GameObject obj = boltList[0];
-			obj.SetActive (true);
-			boltList.RemoveAt (0);
-			return obj;
-		}
-		return null;
+        GameObject obj = (GameObject)Instantiate(boltPrefab);
+        obj.SetActive(true);
+        return obj;
 	}
 
 	public void returnBolt(GameObject bolt) {
-		bolt.SetActive (false);
-		boltList.Add (bolt);
+		bolt.SetActive (true);
+        Destroy(bolt);
 	}
 
     public GameObject getAsteroid() {
@@ -280,7 +276,7 @@ public class GameController : MonoBehaviour {
         winMusic.Stop();
         gameOverMusic.Stop();
         gameStarted = true;
-        this.lives = 50;
+        this.lives = 2;
         this.score = 0;
 		this.nextActionTime = Time.time;
 		this.nextStarActionTime = Time.time;
